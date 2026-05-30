@@ -1,0 +1,216 @@
+/* ============================================================
+   GARCIA LOCATION — Dark Japandi + Glassmorphism
+   Design tokens & global styles
+   ============================================================ */
+
+:root {
+  /* Backgrounds — warm ebony / anthracite */
+  --bg-0: #0B0C0E;          /* deepest */
+  --bg-1: #111317;          /* base */
+  --bg-2: #161A1F;          /* raised */
+  --bg-grain: rgba(255,255,255,0.015);
+
+  /* Ink — warm sand whites (Japandi warmth) */
+  --ink:       #F3EFE7;
+  --ink-dim:   rgba(243,239,231,0.66);
+  --ink-faint: rgba(243,239,231,0.40);
+  --ink-ghost: rgba(243,239,231,0.16);
+
+  /* Accents — set by tweaks */
+  --safran: #F0A14B;
+  --lagon:  #3FD8C6;
+  --accent:    var(--safran);   /* primary CTA */
+  --accent-2:  var(--lagon);    /* secondary highlight */
+  --accent-ink: #1A1206;        /* text on accent */
+
+  /* Glass */
+  --glass-blur: 20px;
+  --glass-bg:        rgba(255,255,255,0.045);
+  --glass-bg-strong: rgba(255,255,255,0.075);
+  --glass-border:    var(--hair);
+  --glass-hi:        rgba(255,255,255,0.18);  /* top highlight */
+  --glass-shadow: 0 24px 60px -24px rgba(0,0,0,0.65);
+
+  /* Adaptive ink-derived tints (work on dark AND light) */
+  --tint-1: color-mix(in srgb, var(--ink) 4%, transparent);
+  --tint-2: color-mix(in srgb, var(--ink) 7%, transparent);
+  --tint-3: color-mix(in srgb, var(--ink) 11%, transparent);
+
+  /* Type */
+  --font-body: "Satoshi", system-ui, sans-serif;
+  --font-head: "Satoshi", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Hairline (adaptive) */
+  --hair: color-mix(in srgb, var(--ink) 15%, transparent);
+  --hair-soft: color-mix(in srgb, var(--ink) 8%, transparent);
+
+  /* Spacing rhythm */
+  --pad-x: clamp(20px, 5vw, 84px);
+  --maxw: 1280px;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+  --radius-xs: 4px;
+
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================
+   LIGHT THEME — warm sand Japandi (default)
+   ============================================================ */
+html.theme-light {
+  --bg-0: #EEF1F7;   /* cool light (footer / contrast bands) */
+  --bg-1: #FBFBFE;   /* base, near white */
+  --bg-2: #FFFFFF;   /* raised */
+
+  --ink:       #1B1D2E;   /* deep indigo navy */
+  --ink-dim:   rgba(27,29,46,0.62);
+  --ink-faint: rgba(27,29,46,0.40);
+  --ink-ghost: rgba(27,29,46,0.12);
+
+  --accent-ink: #20140A;
+
+  --glass-bg:        rgba(255,255,255,0.62);
+  --glass-bg-strong: rgba(255,255,255,0.85);
+  --glass-hi:        rgba(255,255,255,0.92);
+  --glass-shadow: 0 26px 54px -30px rgba(30,34,58,0.28);
+}
+html.theme-light body { background: var(--bg-1); }
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg-1);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+
+/* Ambient background: deep matte field + ONE organic warm glow (no aurora cliché) */
+.bg-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 820px at 88% -12%, color-mix(in oklch, var(--accent) 13%, transparent), transparent 58%),
+    radial-gradient(700px 600px at -8% 96%, color-mix(in oklch, var(--accent-2) 6%, transparent), transparent 60%),
+    linear-gradient(175deg, #0A0B0D, var(--bg-0) 46%, #08090B);
+}
+/* Reinforced film grain — the "human" texture */
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+.app-root { position: relative; z-index: 1; }
+
+/* Light theme: bright, cool, airy field + soft pastel glows */
+html.theme-light .bg-field {
+  background:
+    radial-gradient(1100px 820px at 90% -12%, color-mix(in oklch, #7DB0FF 16%, transparent), transparent 56%),
+    radial-gradient(760px 640px at -6% 30%, color-mix(in oklch, var(--accent) 9%, transparent), transparent 60%),
+    radial-gradient(820px 700px at 60% 116%, color-mix(in oklch, var(--accent-2) 9%, transparent), transparent 60%),
+    linear-gradient(180deg, #FCFCFE, var(--bg-1) 50%, #F3F5FA);
+}
+html.theme-light .bg-grain { opacity: 0.22; mix-blend-mode: multiply; }
+
+/* ---- Typography helpers ---- */
+h1,h2,h3,h4 { font-family: var(--font-head); font-weight: 700; margin: 0; line-height: 1.04; letter-spacing: -0.02em; }
+/* Mono micro-labels — the editorial / design-engineer signal */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent-2); display: inline-flex; align-items: baseline; gap: 10px; white-space: nowrap;
+}
+.eyebrow::before { content:"—"; opacity: 0.55; letter-spacing: 0; }
+.mono { font-family: var(--font-mono); font-weight: 400; letter-spacing: 0.04em; }
+.idx { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--ink-faint); letter-spacing: 0.05em; }
+
+.section { position: relative; padding: clamp(72px, 11vh, 140px) var(--pad-x); }
+.wrap { max-width: var(--maxw); margin: 0 auto; }
+
+/* ---- Glass surface ---- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  border: 1px solid var(--hair);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-hi);
+  border-radius: var(--radius-md);
+}
+.glass-strong { background: var(--glass-bg-strong); }
+
+/* ---- Buttons ---- */
+.btn {
+  font-family: var(--font-mono);
+  font-weight: 400; font-size: 13px; letter-spacing: 0.02em; text-transform: uppercase;
+  border: none; cursor: pointer; border-radius: 999px;
+  padding: 14px 22px; display: inline-flex; align-items: center; gap: 9px;
+  transition: transform .35s var(--ease-out), box-shadow .3s var(--ease-out), background .25s, color .25s;
+  white-space: nowrap; will-change: transform;
+}
+.btn:active { transform: translateY(1px) scale(0.985); }
+.btn-accent {
+  background: var(--accent); color: var(--accent-ink);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), inset 0 0 0 1px color-mix(in oklch, var(--accent) 60%, white 0%);
+}
+.btn-accent:hover { box-shadow: 0 8px 24px -12px color-mix(in oklch, var(--accent) 80%, transparent), inset 0 1px 0 rgba(255,255,255,0.45); }
+.btn-ghost {
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--hair); backdrop-filter: blur(10px);
+}
+.btn-ghost:hover { background: var(--tint-2); border-color: var(--ink-faint); }
+.btn-lg { padding: 17px 28px; font-size: 13.5px; }
+.btn-sm { padding: 10px 15px; font-size: 11.5px; }
+
+/* small caps chip — mono hairline tick */
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 400; letter-spacing: 0.02em; color: var(--ink-dim);
+  padding: 7px 13px; border-radius: 999px;
+  background: transparent; border: 1px solid var(--hair);
+}
+.chip svg { width: 14px; height: 14px; color: var(--accent); }
+
+a { color: inherit; text-decoration: none; }
+
+/* selection */
+::selection { background: color-mix(in oklch, var(--accent) 40%, transparent); color: #fff; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--tint-3); border-radius: 999px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* reveal-on-scroll */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Motion safety net: if the page loads in a throttled/background tab where the
+   animation clock never ticks, force entrance states to their visible end-state
+   so nothing is ever stuck invisible. Toggled by an early rAF probe in the HTML. */
+html.no-motion .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+html.no-motion .pb-panel { animation: none !important; opacity: 1 !important; transform: none !important; }
+html.no-motion .pb-confirm .ok { animation: none !important; transform: none !important; }
+html.no-motion .hero-badge { animation: none !important; }
+html.no-motion .cal-pop, html.no-motion .dd-pop { animation: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}

@@ -1,0 +1,77 @@
+/* ============================================================
+   GARCIA LOCATION — "real rental site" sections
+   ============================================================ */
+
+/* ---------------- COMMENT ÇA MARCHE ---------------- */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--hair-soft); border: 1px solid var(--hair-soft); border-radius: var(--radius-lg); overflow: hidden; }
+.step { position: relative; padding: 34px 30px 36px; background: var(--bg-1); }
+.step-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+.step-n { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.1em; color: var(--accent); }
+.step-ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; border: 1px solid var(--hair); color: var(--accent-2); background: var(--tint-1); }
+.step h3 { font-size: 21px; font-weight: 700; letter-spacing: -0.025em; }
+.step p { font-size: 14.5px; color: var(--ink-dim); margin: 9px 0 0; text-wrap: pretty; }
+.step-link { position: absolute; top: 57px; right: -1px; width: 1px; height: 0; }
+
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 1px; background: var(--hair-soft); border: 1px solid var(--hair-soft); border-top: none; border-radius: 0 0 var(--radius-lg) var(--radius-lg); overflow: hidden; }
+.stat { background: var(--bg-1); padding: 22px 26px; display: flex; flex-direction: column; gap: 4px; }
+.stat b { font-family: var(--font-mono); font-size: clamp(26px, 3vw, 34px); font-weight: 400; letter-spacing: -0.02em; }
+.stat span { font-size: 12.5px; color: var(--ink-faint); }
+
+/* ---------------- NOS AGENCES ---------------- */
+.agency-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.agency-card { overflow: hidden; border-radius: var(--radius-lg); display: flex; flex-direction: column; transition: border-color .3s; }
+.agency-card:hover { border-color: var(--ink-faint); }
+.agency-media { position: relative; aspect-ratio: 16/10; overflow: hidden; }
+.agency-media image-slot { width: 100%; height: 100%; display: block; transition: transform .7s var(--ease-out); }
+.agency-card:hover .agency-media image-slot { transform: scale(1.05); }
+.agency-area { position: absolute; top: 14px; left: 14px; z-index: 2; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; background: rgba(8,9,11,0.5); backdrop-filter: blur(8px); border: 1px solid var(--hair); color: #F3EFE7; }
+.agency-new { position: absolute; top: 14px; right: 14px; z-index: 2; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--accent-2); color: var(--accent-ink); }
+.agency-body { padding: 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.agency-body h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.025em; }
+.agency-row { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--ink-dim); line-height: 1.4; }
+.agency-row svg { flex: none; margin-top: 1px; color: var(--accent-2); }
+.agency-row em { display: block; font-style: normal; font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+.agency-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 6px; }
+.agency-actions .btn { flex: 1; justify-content: center; }
+
+/* ---------------- AVIS CLIENTS ---------------- */
+.reviews-score { display: flex; align-items: center; gap: 16px; }
+.reviews-score > b { font-family: var(--font-mono); font-size: 46px; font-weight: 400; letter-spacing: -0.03em; line-height: 1; }
+.reviews-score > b span { font-size: 18px; color: var(--ink-faint); }
+.stars { display: inline-flex; gap: 3px; color: var(--accent); }
+.reviews-count { display: block; font-size: 12.5px; color: var(--ink-faint); margin-top: 5px; }
+
+.reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; }
+.review-card { padding: 26px; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 16px; }
+.review-card blockquote { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--ink); text-wrap: pretty; }
+.review-card figcaption { display: flex; align-items: center; gap: 12px; margin-top: auto; padding-top: 4px; }
+.review-av { width: 44px; height: 44px; flex: none; border-radius: 50%; background: linear-gradient(140deg, color-mix(in oklch, var(--accent) 30%, var(--bg-2)), var(--bg-2)); }
+.review-card figcaption b { font-size: 14.5px; font-weight: 700; display: block; }
+.review-card figcaption span { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-faint); }
+
+/* ---------------- CTA FINALE ---------------- */
+.cta-band-wrap { padding-top: clamp(40px, 6vh, 70px); }
+.cta-band { position: relative; overflow: hidden; text-align: center; padding: clamp(48px, 7vw, 84px) clamp(28px, 5vw, 80px); border-radius: calc(var(--radius-lg) + 8px); }
+.cta-glow { position: absolute; inset: auto -10% -60% -10%; height: 120%; z-index: 0; background: radial-gradient(60% 80% at 50% 100%, color-mix(in oklch, var(--accent) 32%, transparent), transparent 70%); filter: blur(10px); pointer-events: none; }
+.cta-band > * { position: relative; z-index: 1; }
+.cta-band .eyebrow { justify-content: center; }
+.cta-band h2 { font-size: clamp(30px, 5vw, 56px); font-weight: 800; letter-spacing: -0.035em; line-height: 0.98; margin-top: 16px; }
+.cta-band p { color: var(--ink-dim); font-size: 16.5px; max-width: 480px; margin: 18px auto 0; text-wrap: pretty; }
+.cta-actions { display: flex; gap: 12px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+.cta-phones { display: flex; gap: 26px; justify-content: center; margin-top: 26px; flex-wrap: wrap; }
+.cta-phones a { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 13px; color: var(--ink-dim); transition: color .2s; white-space: nowrap; }
+.cta-phones a:hover { color: var(--ink); }
+.cta-phones a svg { color: var(--accent-2); }
+.cta-phones em { font-style: normal; color: var(--ink-faint); font-size: 11px; }
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 980px) {
+  .steps { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+  .agency-grid { grid-template-columns: 1fr 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .agency-grid { grid-template-columns: 1fr; }
+  .sec-head .reviews-score { margin-top: 16px; }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr" class="theme-light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Garcia Location — Mayotte</title>
+
+<!-- Fonts: Satoshi / Clash Display / General Sans (Fontshare) -->
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="sections.css" />
+<link rel="stylesheet" href="sections2.css" />
+<link rel="stylesheet" href="heromock.css" />
+
+<!-- React + Babel (pinned) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- image-slot web component -->
+<script src="image-slot.js"></script>
+</head>
+<body>
+  <div class="bg-field"></div>
+  <div class="bg-grain"></div>
+  <div id="root"></div>
+
+  <!-- Motion safety net: detect a throttled/background tab (frozen animation clock)
+       and fall back to visible end-states so content is never stuck invisible. -->
+  <script>
+    (function () {
+      var ticked = false;
+      requestAnimationFrame(function () { ticked = true; });
+      setTimeout(function () {
+        if (!ticked) document.documentElement.classList.add("no-motion");
+      }, 650);
+    })();
+  </script>
+
+  <!-- Magnetic hover on primary CTAs (21st.dev-style design-engineer detail) -->
+  <script>
+    (function () {
+      function bind() {
+        document.querySelectorAll(".btn-accent").forEach(function (b) {
+          if (b.__mag) return; b.__mag = true;
+          b.addEventListener("pointermove", function (e) {
+            var r = b.getBoundingClientRect();
+            var dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+            var dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+            b.style.transform = "translate(" + dx * 7 + "px," + dy * 7 + "px)";
+          });
+          b.addEventListener("pointerleave", function () { b.style.transform = ""; });
+        });
+      }
+      setInterval(bind, 700);
+    })();
+  </script>
+
+  <!-- App scripts (order matters; shared via window) -->
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="icons.jsx"></script>
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="widget.jsx"></script>
+  <script type="text/babel" src="ios-frame.jsx"></script>
+  <script type="text/babel" src="heromock.jsx"></script>
+  <script type="text/babel" src="landing.jsx"></script>
+  <script type="text/babel" src="landing2.jsx"></script>
+  <script type="text/babel" src="prebooking.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+
+  <!-- Bundler splash thumbnail -->
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <rect width="100" height="100" fill="#111317"/>
+      <rect width="100" height="100" fill="url(#g)" opacity="0.5"/>
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#F0A14B"/>
+          <stop offset="1" stop-color="#3FD8C6"/>
+        </linearGradient>
+      </defs>
+      <text x="50" y="62" font-family="sans-serif" font-size="44" font-weight="800" fill="#F3EFE7" text-anchor="middle">G</text>
+    </svg>
+  </template>
+</body>
+</html>
