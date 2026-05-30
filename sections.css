@@ -43,7 +43,7 @@
 }
 
 /* Left copy */
-.hero-rc-copy { position: relative; z-index: 1; }
+.hero-rc-copy { position: relative; z-index: 1; min-width: 0; }
 .hero-rc-eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
@@ -116,7 +116,7 @@
 .hrf-sub span { display: block; font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
 
 /* ---- Widget card (right column) ---- */
-.hero-rc-right { position: relative; z-index: 1; }
+.hero-rc-right { position: relative; z-index: 1; min-width: 0; }
 
 @keyframes widgetGlow {
   0%, 100% { box-shadow: 0 0 0 1px color-mix(in oklch, var(--accent) 35%, transparent),
@@ -533,7 +533,7 @@
 }
 .hero-vo-trust-item svg { color: var(--accent-2); }
 
-.hero-vo-visual { position: relative; }
+.hero-vo-visual { position: relative; min-width: 0; }
 .hero-vo-glow {
   position: absolute; inset: -15% -10%; z-index: -1; border-radius: 50%;
   background: radial-gradient(circle, color-mix(in oklch, var(--accent) 30%, transparent), transparent 65%);
@@ -715,7 +715,7 @@
 .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; gap: 14px; }
 .bento-cell {
   position: relative; overflow: hidden; padding: 28px; border-radius: var(--radius-lg);
-  display: flex; flex-direction: column; justify-content: space-between;
+  display: flex; flex-direction: column; justify-content: space-between; min-width: 0;
   transition: background .3s, border-color .3s, transform .35s var(--ease-out); border: 1px solid var(--hair);
 }
 .bento-cell:hover { background: var(--bg-2); border-color: var(--ink-faint); }
