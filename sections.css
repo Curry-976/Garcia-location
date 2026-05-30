@@ -355,7 +355,6 @@
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; justify-content: center;
   padding: 0;
-  overflow: hidden;
   border-bottom: 1px solid transparent;
   transition: border-color .3s, background .3s, backdrop-filter .3s;
 }
