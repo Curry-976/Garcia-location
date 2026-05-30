@@ -29,77 +29,99 @@ function useReveal(view) {
 /* ---------- NAVBAR ---------- */
 function Navbar({ onContact, theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [menu, setMenu]   = useState(false);
+  const [active, setActive] = useState("");
   const links = [["flotte","Catalogue"],["agences","Showrooms"],["pourquoi","Pourquoi nous"],["avis","Avis"],["faq","FAQ"]];
 
   useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", h, { passive: true });
-    return () => window.removeEventListener("scroll", h);
+    const ids = links.map(l => l[0]);
+    function onScroll() {
+      setScrolled(window.scrollY > 30);
+      let cur = "";
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 160) cur = id;
+      }
+      if (window.scrollY < 420) cur = "";
+      setActive(cur);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    document.body.style.overflow = menu ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [open]);
+  }, [menu]);
 
-  function close() { setOpen(false); }
+  function close() { setMenu(false); }
 
   return (
     <>
-      <div className={"nav-shell" + (scrolled ? " scrolled" : "") + (open ? " nav-open" : "")}>
+      <div className={"nav-shell" + (scrolled ? " scrolled" : "")}>
         <nav className="navbar">
-          <a href="#top" className="nav-brand" aria-label="Garcia Automobiles — accueil" onClick={close}>
+
+          {/* Left — brand */}
+          <a href="#top" className="nav-brand" aria-label="Garcia Automobiles — accueil">
             <img className="logo-badge" src="logo-mark.svg" alt="Garcia Automobiles" />
             <div className="nav-wordmark"><b>Garcia</b><span>Automobiles · Mayotte</span></div>
           </a>
+
+          {/* Center — pill links (hidden on mobile) */}
+          <div className="nav-pill">
+            {links.map(([id, l]) => (
+              <a key={id} href={"#" + id}
+                className={"nav-pill-link" + (active === id ? " active" : "")}>
+                {l}
+              </a>
+            ))}
+          </div>
+
+          {/* Right — actions */}
           <div className="nav-actions">
             <button className="nav-icon-btn" onClick={onToggleTheme}
               aria-label={theme === "light" ? "Thème sombre" : "Thème clair"}>
               <Icon name={theme === "light" ? "moon" : "sun"} size={17} />
             </button>
-            <button className="nav-burger" onClick={() => setOpen(o => !o)}
-              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={open}>
-              <span className={"burger-line" + (open ? " open" : "")}></span>
+            <button className="btn btn-accent btn-sm nav-cta-desktop" onClick={onContact}>
+              Nous contacter
+            </button>
+            <button className="nav-burger" onClick={() => setMenu(m => !m)}
+              aria-label={menu ? "Fermer" : "Menu"} aria-expanded={menu}>
+              <span className={"burger-line" + (menu ? " open" : "")}></span>
             </button>
           </div>
         </nav>
       </div>
 
-      <div className={"nav-fullscreen" + (open ? " open" : "")} aria-hidden={!open}>
-        <div className="nf-bg" aria-hidden="true"></div>
-        <div className="nf-glow" aria-hidden="true"></div>
-
-        <nav className="nf-nav">
-          <ol className="nf-links">
-            {links.map(([id, l], i) => (
-              <li key={id} style={{ "--i": i }}>
-                <a href={"#" + id} onClick={close} tabIndex={open ? 0 : -1}>
-                  <span className="nf-num">0{i + 1}</span>
-                  <span className="nf-label">{l}</span>
-                  <Icon name="arrowR" size={22} />
-                </a>
-              </li>
-            ))}
-          </ol>
-
-          <div className="nf-foot">
-            <button className="btn btn-accent btn-lg" onClick={() => { close(); onContact(); }} tabIndex={open ? 0 : -1}>
-              Nous contacter <Icon name="arrowR" size={17} />
-            </button>
-            <div className="nf-contacts">
-              <a href={"https://wa.me/" + CONTACTS.whatsapp} target="_blank" rel="noreferrer" tabIndex={open ? 0 : -1}>
-                <Icon name="whatsapp" size={18} /> WhatsApp
-              </a>
-              <a href={"tel:+262" + CONTACTS.mamoudzou.replace(/\D/g, "").slice(1)} tabIndex={open ? 0 : -1}>
-                <Icon name="phone" size={16} /> {CONTACTS.mamoudzou}
-              </a>
-            </div>
+      {/* Mobile fullscreen sheet */}
+      <div className={"nav-sheet" + (menu ? " open" : "")} aria-hidden={!menu}>
+        <div className="nav-sheet-links" onClick={close}>
+          {links.map(([id, l], i) => (
+            <a key={id} href={"#" + id}
+              style={{ transitionDelay: (menu ? 0.05 + i * 0.06 : 0) + "s" }}
+              tabIndex={menu ? 0 : -1}>
+              <span className="nav-sheet-idx">0{i + 1}</span>
+              <span>{l}</span>
+            </a>
+          ))}
+        </div>
+        <div className="nav-sheet-foot">
+          <button className="btn btn-accent btn-lg" onClick={() => { close(); onContact(); }}
+            tabIndex={menu ? 0 : -1}>
+            Nous contacter <Icon name="arrowR" size={17} />
+          </button>
+          <div className="nav-sheet-contacts">
+            <a href={"https://wa.me/" + CONTACTS.whatsapp} target="_blank" rel="noreferrer"
+              tabIndex={menu ? 0 : -1}>
+              <Icon name="whatsapp" size={18} /> WhatsApp
+            </a>
+            <a href={"tel:+262" + CONTACTS.mamoudzou.replace(/\D/g, "").slice(1)}
+              tabIndex={menu ? 0 : -1}>
+              <Icon name="phone" size={15} /> {CONTACTS.mamoudzou}
+            </a>
           </div>
-        </nav>
-
-        <div className="nf-deco" aria-hidden="true">
-          <span>Garcia</span>
         </div>
       </div>
     </>
