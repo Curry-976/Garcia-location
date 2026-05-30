@@ -57,9 +57,9 @@ function Agencies() {
         <div className="sec-head reveal">
           <div>
             <span className="eyebrow">Nos showrooms</span>
-            <h2 style={{ marginTop: 14 }}>Deux showrooms,<br />toute l'île couverte.</h2>
+            <h2 style={{ marginTop: 14 }}>Trois showrooms,<br />toute l'île couverte.</h2>
           </div>
-          <p>Venez découvrir nos véhicules à Mamoudzou ou dans le Sud à Chirongui. Essai possible sur rendez-vous.</p>
+          <p>Mamoudzou, Chirongui et l'aéroport de Dzaoudzi-Pamandzi. Essai possible sur rendez-vous.</p>
         </div>
         <div className="showroom-grid reveal">
           {AGENCIES.map(a => (

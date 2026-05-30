@@ -446,12 +446,13 @@ function Bento() {
           </div>
           <div className="bento-cell glass bento-map b-wide">
             <div>
-              <div className="bento-big-num">2</div>
+              <div className="bento-big-num">3</div>
               <h3 style={{ marginTop: 6 }}>showrooms à Mayotte</h3>
             </div>
             <div className="map-pins">
               <div className="map-pin"><span className="pdot"></span> Mamoudzou — Kawéni</div>
               <div className="map-pin lagoon"><span className="pdot"></span> Chirongui — Sud</div>
+              <div className="map-pin"><span className="pdot"></span> Aéroport Dzaoudzi-Pamandzi</div>
             </div>
           </div>
         </div>

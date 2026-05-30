@@ -8,6 +8,10 @@ const AGENCIES = [
     address: "Centre de Chirongui, 97620 Chirongui", area: "Grande-Terre · Sud",
     hours: "Lun–Sam · 8h00–17h30", hoursNote: "Essai possible sur rendez-vous",
     phone: "269 627 627", prebook: "269 627 627" },
+  { id: "aeroport", name: "Agence Aéroport — Dzaoudzi-Pamandzi", short: "Aéroport", desc: "Prise en charge à l'aéroport", icon: "pin",
+    address: "Aéroport de Dzaoudzi-Pamandzi, 97615 Pamandzi", area: "Petite-Terre",
+    hours: "Sur rendez-vous", hoursNote: "Pré-réservation recommandée",
+    phone: "0639 69 02 06", prebook: "0639690206" },
 ];
 
 const FLEET = [
@@ -63,7 +67,7 @@ const STATS = [
   { v: "12 ans", l: "d'expérience à Mayotte" },
   { v: "200+", l: "véhicules vendus / an" },
   { v: "6 mois", l: "de garantie incluse" },
-  { v: "2", l: "showrooms sur l'île" },
+  { v: "3", l: "showrooms sur l'île" },
 ];
 
 const TESTIMONIALS = [
