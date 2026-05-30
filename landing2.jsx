@@ -58,10 +58,10 @@ function Agencies({ onPrebook }) {
       <div className="wrap">
         <div className="sec-head reveal">
           <div>
-            <span className="eyebrow">Nos agences</span>
-            <h2 style={{marginTop:14}}>Trois points de retrait,<br/>toute l'île couverte.</h2>
+            <span className="eyebrow">Nos showrooms</span>
+            <h2 style={{marginTop:14}}>Deux showrooms,<br/>toute l'île couverte.</h2>
           </div>
-          <p>De la barge de Mamoudzou à l'aéroport de Petite-Terre, jusqu'au Sud à Chirongui.</p>
+          <p>Venez découvrir nos véhicules à Mamoudzou ou dans le Sud à Chirongui. Essai possible sur rendez-vous.</p>
         </div>
 
         <div className="agency-grid reveal">
@@ -111,13 +111,13 @@ function Testimonials() {
         <div className="sec-head reveal">
           <div>
             <span className="eyebrow">Avis clients</span>
-            <h2 style={{marginTop:14}}>Touristes, pros,<br/>fonctionnaires &amp; locaux.</h2>
+            <h2 style={{marginTop:14}}>Particuliers, pros,<br/>fonctionnaires &amp; artisans.</h2>
           </div>
           <div className="reviews-score">
             <b>4,8<span>/5</span></b>
             <div>
               <Stars n={5}/>
-              <span className="reviews-count">sur 240+ locations</span>
+              <span className="reviews-count">sur 200+ ventes</span>
             </div>
           </div>
         </div>
@@ -149,20 +149,20 @@ function FinalCTA({ onPrebook }) {
       <div className="wrap">
         <div className="cta-band glass glass-strong reveal">
           <div className="cta-glow" aria-hidden="true"></div>
-          <span className="eyebrow">Prêt à partir</span>
-          <h2>Réservez votre véhicule,<br/>on s'occupe du reste.</h2>
-          <p>Pré-réservation en 2 minutes, confirmation par notre équipe, véhicule prêt à votre arrivée.</p>
+          <span className="eyebrow">Un véhicule vous intéresse ?</span>
+          <h2>Contactez-nous,<br/>on s'occupe du reste.</h2>
+          <p>Envoyez votre demande en 2 minutes, notre équipe vous rappelle pour organiser l'essai.</p>
           <div className="cta-actions">
             <button className="btn btn-accent btn-lg" onClick={onPrebook}>
-              Pré-réserver maintenant <Icon name="arrowR" size={17}/>
+              Nous contacter <Icon name="arrowR" size={17}/>
             </button>
-            <a className="btn btn-ghost btn-lg" href={"https://wa.me/262639690206"} target="_blank" rel="noreferrer">
+            <a className="btn btn-ghost btn-lg" href={"https://wa.me/" + CONTACTS.whatsapp} target="_blank" rel="noreferrer">
               <Icon name="whatsapp" size={18}/> WhatsApp
             </a>
           </div>
           <div className="cta-phones">
-            <a href={telHref(CONTACTS.prebookMamoudzou)}><Icon name="phone" size={14}/> {CONTACTS.prebookMamoudzou} <em>Mamoudzou</em></a>
-            <a href={telHref(CONTACTS.prebookAeroport)}><Icon name="phone" size={14}/> {CONTACTS.prebookAeroport} <em>Aéroport</em></a>
+            <a href={telHref(CONTACTS.mamoudzou)}><Icon name="phone" size={14}/> {CONTACTS.mamoudzou} <em>Mamoudzou</em></a>
+            <a href={telHref(CONTACTS.mainPhone)}><Icon name="phone" size={14}/> {CONTACTS.mainPhone} <em>Général</em></a>
           </div>
         </div>
       </div>
