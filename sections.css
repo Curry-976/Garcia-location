@@ -1017,45 +1017,102 @@
 /* ----------------------------------------------------------------
    RESPONSIVE
 ---------------------------------------------------------------- */
+/* ================================================================
+   RESPONSIVE — breakpoints unifiés
+   1024 → tablette paysage
+    840 → tablette portrait / burger nav
+    600 → mobile large
+    480 → mobile standard
+================================================================ */
+
+/* 1024px — tablette paysage */
 @media (max-width: 1024px) {
   .fleet-vo-grid { grid-template-columns: repeat(2, 1fr); }
   .fleet-vo-grid .car-card-featured { grid-column: span 2; }
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .showroom-grid { grid-template-columns: repeat(2, 1fr); }
+  .reviews-grid { grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 980px) {
+
+/* 900px — hero rachat + trust bar */
+@media (max-width: 900px) {
+  .hero-rachat-grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero-rc-right { order: -1; }
+  .hero-rc-float { left: auto; right: 16px; bottom: -10px; }
+  .trust-bar-inner { grid-template-columns: 1fr; }
+  .trust-bar-col.center {
+    border-left: none; border-right: none;
+    border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+  }
+  .trust-bar-col.right { padding-left: 0; }
   .hero-vo-grid { grid-template-columns: 1fr; }
   .hero-vo-visual { order: -1; }
   .hero-vo-floating-card { left: auto; right: 16px; bottom: 16px; }
-  .bento { grid-template-columns: repeat(2, 1fr); }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .pb-layout { grid-template-columns: 1fr; }
-  .pb-summary { position: static; }
-  .showroom-grid { grid-template-columns: 1fr; }
-  .reviews-grid { grid-template-columns: 1fr; }
 }
+
+/* 840px — burger, pill masquée */
 @media (max-width: 840px) {
   .nav-pill { display: none; }
   .nav-cta-desktop { display: none; }
   .nav-burger { display: flex; }
   .navbar { grid-template-columns: 1fr auto; }
+  .pb-layout { grid-template-columns: 1fr; }
+  .pb-summary { position: static; }
 }
-@media (max-width: 720px) {
+
+/* 600px — mobile large */
+@media (max-width: 600px) {
+  /* Hero plaque */
+  .widget-card { padding: 22px 18px 20px; }
+  .plate-eu-strip { width: 32px; }
+  .plate-eu-f { font-size: 12px; }
+  .plate-eu-star { font-size: 8px; }
+  .plate-number-input { font-size: 18px; padding: 12px 6px; }
+  .hero-rc-h1 { letter-spacing: -0.035em; }
+  /* Grilles */
   .fleet-vo-grid { grid-template-columns: 1fr; }
   .fleet-vo-grid .car-card-featured { grid-column: auto; }
   .bento { grid-template-columns: 1fr; grid-auto-rows: auto; }
   .b-wide, .b-tall { grid-column: auto; grid-row: auto; }
   .bento-cell { min-height: 180px; }
-  .footer-top { grid-template-columns: 1fr; }
-  .float-cta { display: flex; }
-  .pb-veh-grid { grid-template-columns: 1fr; }
-  .pb-row { grid-template-columns: 1fr; }
+  .showroom-grid { grid-template-columns: 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  /* Steps & stats */
   .steps { grid-template-columns: 1fr; }
   .stats { grid-template-columns: repeat(2, 1fr); }
+  /* Footer */
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-brand { grid-column: auto; }
+  /* CTA band */
   .cta-band { padding: 40px 24px; }
+  .cta-actions { flex-direction: column; }
+  .cta-actions .btn { width: 100%; justify-content: center; }
+  /* Float CTA */
+  .float-cta { display: flex; }
+  /* Prebooking */
+  .pb-veh-grid { grid-template-columns: 1fr; }
+  .pb-row { grid-template-columns: 1fr; }
+  /* Trust bar : masquer les colonnes latérales sur mobile */
+  .trust-bar-col:not(.center) { display: none; }
+}
+
+/* 480px — mobile standard */
+@media (max-width: 480px) {
+  .hero-rc-badges { gap: 8px; }
+  .hero-rc-badge { font-size: 11px; padding: 7px 12px; }
+  .car-card-vo { border-radius: var(--radius-md); }
+  .ccv-media { height: 180px; }
+  .faq-wrap { gap: 8px; }
+  .nav-sheet-links a { font-size: clamp(24px, 9vw, 34px); padding: 14px 0; }
+  .showroom-card { border-radius: var(--radius-md); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .car-card-vo:hover { transform: none; }
   .review-card:hover { transform: none; }
   .showroom-card:hover { transform: none; }
-  .hero-vo-floating-card { animation: none; }
+  .hero-vo-floating-card, .hero-rc-float { animation: none; }
+  .widget-card { animation: none; }
+  .ticker-track { animation: none; }
 }
