@@ -508,6 +508,7 @@ function Footer({ onContact }) {
             <h4>Showrooms</h4>
             <a href="#agences">Mamoudzou — Kawéni</a>
             <a href="#agences">Chirongui — Sud</a>
+            <a href="#agences">Aéroport Dzaoudzi-Pamandzi</a>
           </div>
           <div className="footer-col">
             <h4>Catalogue</h4>
