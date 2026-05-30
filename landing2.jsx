@@ -1,4 +1,4 @@
-// landing2.jsx — "real rental site" sections: how-it-works, agencies, reviews, final CTA
+// landing2.jsx — Garcia Automobiles — showrooms, testimonials, CTA
 const { useState: useState2 } = React;
 
 function telHref(n) {
@@ -11,35 +11,33 @@ function mapsHref(addr) {
   return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(addr + ", Mayotte");
 }
 
-/* ---------- COMMENT ÇA MARCHE + STATS ---------- */
-function HowItWorks({ onPrebook }) {
+/* ---------- COMMENT ÇA MARCHE ---------- */
+function HowItWorks() {
   return (
     <section className="section how" id="comment">
       <div className="wrap">
-        <div className="sec-head reveal" style={{marginBottom:48}}>
+        <div className="sec-head reveal" style={{ marginBottom: 48 }}>
           <div>
             <span className="eyebrow">Comment ça marche</span>
-            <h2 style={{marginTop:14}}>Achetez votre véhicule<br/>en trois étapes.</h2>
+            <h2 style={{ marginTop: 14 }}>Achetez votre véhicule<br />en trois étapes.</h2>
           </div>
           <p>Pas de prise de tête. Vous choisissez, on organise l'essai, vous repartez propriétaire.</p>
         </div>
-
         <div className="steps reveal">
-          {STEPS.map((s,i)=>(
+          {STEPS.map((s, i) => (
             <div className="step" key={s.n}>
               <div className="step-top">
                 <span className="step-n">{s.n}</span>
-                <span className="step-ic"><Icon name={s.icon} size={20}/></span>
+                <span className="step-ic"><Icon name={s.icon} size={20} /></span>
               </div>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
-              {i < STEPS.length-1 && <span className="step-link" aria-hidden="true"></span>}
+              {i < STEPS.length - 1 && <span className="step-link" aria-hidden="true"></span>}
             </div>
           ))}
         </div>
-
         <div className="stats reveal">
-          {STATS.map((s,i)=>(
+          {STATS.map((s, i) => (
             <div className="stat" key={i}>
               <b>{s.v}</b>
               <span>{s.l}</span>
@@ -51,37 +49,36 @@ function HowItWorks({ onPrebook }) {
   );
 }
 
-/* ---------- NOS AGENCES ---------- */
-function Agencies({ onPrebook }) {
+/* ---------- NOS SHOWROOMS ---------- */
+function Agencies() {
   return (
     <section className="section agencies" id="agences">
       <div className="wrap">
         <div className="sec-head reveal">
           <div>
             <span className="eyebrow">Nos showrooms</span>
-            <h2 style={{marginTop:14}}>Deux showrooms,<br/>toute l'île couverte.</h2>
+            <h2 style={{ marginTop: 14 }}>Deux showrooms,<br />toute l'île couverte.</h2>
           </div>
           <p>Venez découvrir nos véhicules à Mamoudzou ou dans le Sud à Chirongui. Essai possible sur rendez-vous.</p>
         </div>
-
-        <div className="agency-grid reveal">
-          {AGENCIES.map(a=>(
-            <article className="agency-card glass" key={a.id}>
-              <div className="agency-media">
-                <image-slot id={"agency-"+a.id} placeholder={"Photo agence " + a.short} shape="rect"></image-slot>
-                <span className="agency-area">{a.area}</span>
-                {a.isNew && <span className="agency-new">Nouveau</span>}
+        <div className="showroom-grid reveal">
+          {AGENCIES.map(a => (
+            <article className="showroom-card glass" key={a.id}>
+              <div className="showroom-media">
+                <image-slot id={"agency-" + a.id} placeholder={"Showroom " + a.short} shape="rect"></image-slot>
+                <span className="showroom-area">{a.area}</span>
+                {a.isNew && <span className="showroom-new">Nouveau</span>}
               </div>
-              <div className="agency-body">
+              <div className="showroom-body">
                 <h3>{a.short}</h3>
-                <div className="agency-row"><Icon name="pin" size={16}/><span>{a.address}</span></div>
-                <div className="agency-row"><Icon name="clock" size={16}/><span>{a.hours}<em>{a.hoursNote}</em></span></div>
-                <div className="agency-actions">
+                <div className="showroom-row"><Icon name="pin" size={15} /><span>{a.address}</span></div>
+                <div className="showroom-row"><Icon name="calendar" size={15} /><span>{a.hours}<em>{a.hoursNote}</em></span></div>
+                <div className="showroom-actions">
                   <a className="btn btn-accent btn-sm" href={telHref(a.prebook)}>
-                    <Icon name="phone" size={15}/> Appeler
+                    <Icon name="phone" size={14} /> Appeler
                   </a>
                   <a className="btn btn-ghost btn-sm" href={mapsHref(a.address)} target="_blank" rel="noreferrer">
-                    <Icon name="route" size={15}/> Itinéraire
+                    <Icon name="route" size={14} /> Itinéraire
                   </a>
                 </div>
               </div>
@@ -97,8 +94,8 @@ function Agencies({ onPrebook }) {
 function Stars({ n }) {
   return (
     <span className="stars" aria-label={n + " sur 5"}>
-      {Array.from({length:5}).map((_,i)=>(
-        <Icon key={i} name="star" size={15} fill={i < n} stroke={1.5}/>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Icon key={i} name="star" size={15} fill={i < n} stroke={1.5} />
       ))}
     </span>
   );
@@ -111,24 +108,25 @@ function Testimonials() {
         <div className="sec-head reveal">
           <div>
             <span className="eyebrow">Avis clients</span>
-            <h2 style={{marginTop:14}}>Particuliers, pros,<br/>fonctionnaires &amp; artisans.</h2>
+            <h2 style={{ marginTop: 14 }}>Particuliers, pros,<br />fonctionnaires &amp; artisans.</h2>
           </div>
           <div className="reviews-score">
             <b>4,8<span>/5</span></b>
             <div>
-              <Stars n={5}/>
+              <Stars n={5} />
               <span className="reviews-count">sur 200+ ventes</span>
             </div>
           </div>
         </div>
-
         <div className="reviews-grid reveal">
-          {TESTIMONIALS.map((t,i)=>(
+          {TESTIMONIALS.map((t, i) => (
             <figure className="review-card glass" key={i}>
-              <Stars n={t.rating}/>
-              <blockquote>{t.text}</blockquote>
+              <Stars n={t.rating} />
+              <blockquote>"{t.text}"</blockquote>
               <figcaption>
-                <image-slot id={t.img} class="review-av" shape="circle" placeholder=" "></image-slot>
+                <div className="review-av-initials">
+                  {t.name.split(" ").map(w => w[0]).join("").slice(0, 2)}
+                </div>
                 <div>
                   <b>{t.name}</b>
                   <span>{t.role}</span>
@@ -143,26 +141,26 @@ function Testimonials() {
 }
 
 /* ---------- CTA FINALE ---------- */
-function FinalCTA({ onPrebook }) {
+function FinalCTA({ onContact }) {
   return (
     <section className="section cta-band-wrap">
       <div className="wrap">
         <div className="cta-band glass glass-strong reveal">
           <div className="cta-glow" aria-hidden="true"></div>
           <span className="eyebrow">Un véhicule vous intéresse ?</span>
-          <h2>Contactez-nous,<br/>on s'occupe du reste.</h2>
+          <h2>Contactez-nous,<br />on s'occupe du reste.</h2>
           <p>Envoyez votre demande en 2 minutes, notre équipe vous rappelle pour organiser l'essai.</p>
           <div className="cta-actions">
-            <button className="btn btn-accent btn-lg" onClick={onPrebook}>
-              Nous contacter <Icon name="arrowR" size={17}/>
+            <button className="btn btn-accent btn-lg" onClick={onContact}>
+              Nous contacter <Icon name="arrowR" size={17} />
             </button>
             <a className="btn btn-ghost btn-lg" href={"https://wa.me/" + CONTACTS.whatsapp} target="_blank" rel="noreferrer">
-              <Icon name="whatsapp" size={18}/> WhatsApp
+              <Icon name="whatsapp" size={18} /> WhatsApp
             </a>
           </div>
           <div className="cta-phones">
-            <a href={telHref(CONTACTS.mamoudzou)}><Icon name="phone" size={14}/> {CONTACTS.mamoudzou} <em>Mamoudzou</em></a>
-            <a href={telHref(CONTACTS.mainPhone)}><Icon name="phone" size={14}/> {CONTACTS.mainPhone} <em>Général</em></a>
+            <a href={telHref(CONTACTS.mamoudzou)}><Icon name="phone" size={14} /> {CONTACTS.mamoudzou} <em>Mamoudzou</em></a>
+            <a href={telHref(CONTACTS.mainPhone)}><Icon name="phone" size={14} /> {CONTACTS.mainPhone} <em>Général</em></a>
           </div>
         </div>
       </div>
