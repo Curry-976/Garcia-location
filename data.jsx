@@ -1,83 +1,78 @@
-// data.jsx — shared content for Garcia Location
+// data.jsx — shared content for Garcia Automobiles (vente véhicules d'occasion)
 const AGENCIES = [
-  { id: "mamoudzou", name: "Mamoudzou — Kawéni", short: "Mamoudzou", desc: "À 600 m de la barge", icon: "pin",
+  { id: "mamoudzou", name: "Showroom Mamoudzou — Kawéni", short: "Mamoudzou", desc: "Zone industrielle de Kawéni", icon: "pin",
     address: "Zone industrielle de Kawéni, 97600 Mamoudzou", area: "Grande-Terre",
     hours: "Lun–Sam · 7h30–18h00", hoursNote: "Dimanche sur rendez-vous",
     phone: "0269 61 46 92", prebook: "269 627 627" },
-  { id: "aeroport", name: "Aéroport — Dzaoudzi-Pamandzi", short: "Aéroport", desc: "Petite-Terre, sortie arrivées", icon: "pin",
-    address: "Aéroport de Mayotte, 97615 Pamandzi", area: "Petite-Terre",
-    hours: "7j/7 · selon les vols", hoursNote: "Accueil à l'arrivée des avions",
-    phone: "0269 60 54 95", prebook: "0639 69 02 06" },
-  { id: "chirongui", name: "Chirongui — Zone Sud", short: "Chirongui", desc: "Nouvelle agence, Sud de l'île", icon: "pin", isNew: true,
+  { id: "chirongui", name: "Showroom Chirongui — Sud", short: "Chirongui", desc: "Nouveau showroom, Sud de l'île", icon: "pin", isNew: true,
     address: "Centre de Chirongui, 97620 Chirongui", area: "Grande-Terre · Sud",
-    hours: "Lun–Sam · 8h00–17h30", hoursNote: "Réservation centrale conseillée",
+    hours: "Lun–Sam · 8h00–17h30", hoursNote: "Essai possible sur rendez-vous",
     phone: "269 627 627", prebook: "269 627 627" },
 ];
 
 const FLEET = [
-  { id: "clio", name: "Renault Clio", cat: "Citadine", catKey: "citadine", tag: "Maniable en ville, économe", img: "clio",
-    specs: { trans: "Manuelle", doors: "5 portes", seats: "5 places", ac: "Climatisation" }, price: 39 },
-  { id: "c3", name: "Citroën C3", cat: "Citadine", catKey: "citadine", tag: "Confort souple pour le quotidien", img: "c3",
-    specs: { trans: "Auto", doors: "5 portes", seats: "5 places", ac: "Climatisation" }, price: 42 },
-  { id: "duster", name: "Dacia Duster 4x2", cat: "SUV", catKey: "suv", tag: "À l'aise sur les routes de l'île", img: "duster",
-    specs: { trans: "Manuelle", doors: "5 portes", seats: "5 places", ac: "Climatisation" }, price: 59 },
-  { id: "jimny", name: "Suzuki Jimny 4x4", cat: "SUV", catKey: "suv", tag: "Compact et passe-partout, pistes du Sud", img: "jimny",
-    specs: { trans: "Manuelle", doors: "3 portes", seats: "4 places", ac: "Climatisation" }, price: 69 },
-  { id: "rav4", name: "Toyota RAV4 Hybride", cat: "SUV", catKey: "suv", tag: "Spacieux, idéal familles & pros", img: "rav4",
-    specs: { trans: "Auto", doors: "5 portes", seats: "5 places", ac: "Climatisation" }, price: 89 },
+  { id: "clio", name: "Renault Clio IV", cat: "Citadine", catKey: "citadine", tag: "Économique et fiable, idéale en ville", img: "clio",
+    specs: { year: "2019", km: "52 000 km", fuel: "Essence", trans: "Manuelle" }, price: 7900 },
+  { id: "c3", name: "Citroën C3", cat: "Citadine", catKey: "citadine", tag: "Confort souple, faible kilométrage", img: "c3",
+    specs: { year: "2020", km: "38 000 km", fuel: "Essence", trans: "Auto" }, price: 9500 },
+  { id: "duster", name: "Dacia Duster 4x2", cat: "SUV", catKey: "suv", tag: "Robuste, à l'aise sur toutes les routes", img: "duster",
+    specs: { year: "2021", km: "41 000 km", fuel: "Diesel", trans: "Manuelle" }, price: 14900 },
+  { id: "jimny", name: "Suzuki Jimny 4x4", cat: "SUV", catKey: "suv", tag: "Compact, passe-partout, pistes du Sud", img: "jimny",
+    specs: { year: "2020", km: "29 000 km", fuel: "Essence", trans: "Manuelle" }, price: 18500 },
+  { id: "rav4", name: "Toyota RAV4 Hybride", cat: "SUV", catKey: "suv", tag: "Spacieux, économe, idéal familles", img: "rav4",
+    specs: { year: "2022", km: "22 000 km", fuel: "Hybride", trans: "Auto" }, price: 27900 },
   { id: "kangoo", name: "Renault Kangoo", cat: "Utilitaire", catKey: "utilitaire", tag: "Volume malin pour artisans", img: "kangoo",
-    specs: { trans: "Manuelle", doors: "Hayon", seats: "3 places", ac: "Climatisation" }, price: 55 },
-  { id: "jumpy", name: "Citroën Jumpy", cat: "Utilitaire", catKey: "utilitaire", tag: "Grand volume, livraisons", img: "jumpy",
-    specs: { trans: "Manuelle", doors: "Latérale", seats: "3 places", ac: "Climatisation" }, price: 72 },
-  { id: "master", name: "Renault Master L2H2", cat: "Utilitaire", catKey: "utilitaire", tag: "Déménagement & gros chantiers", img: "master",
-    specs: { trans: "Manuelle", doors: "Latérale", seats: "3 places", ac: "Climatisation" }, price: 95 },
-  { id: "tucson", name: "Hyundai Tucson", cat: "SUV", catKey: "suv", tag: "Élégant et confortable, longue route", img: "tucson",
-    specs: { trans: "Auto", doors: "5 portes", seats: "5 places", ac: "Climatisation" }, price: 79 },
+    specs: { year: "2019", km: "68 000 km", fuel: "Diesel", trans: "Manuelle" }, price: 10500 },
+  { id: "jumpy", name: "Citroën Jumpy", cat: "Utilitaire", catKey: "utilitaire", tag: "Grand volume, chantiers et livraisons", img: "jumpy",
+    specs: { year: "2020", km: "55 000 km", fuel: "Diesel", trans: "Manuelle" }, price: 16900 },
+  { id: "master", name: "Renault Master L2H2", cat: "Utilitaire", catKey: "utilitaire", tag: "Déménagement et gros chantiers", img: "master",
+    specs: { year: "2018", km: "89 000 km", fuel: "Diesel", trans: "Manuelle" }, price: 19900 },
+  { id: "tucson", name: "Hyundai Tucson", cat: "SUV", catKey: "suv", tag: "Élégant, confortable, longue route", img: "tucson",
+    specs: { year: "2021", km: "34 000 km", fuel: "Diesel", trans: "Auto" }, price: 21500 },
 ];
 
 const FILTERS = [
-  { key: "all", label: "Toute la flotte" },
+  { key: "all", label: "Tous les véhicules" },
   { key: "citadine", label: "Citadines" },
-  { key: "suv", label: "SUV" },
+  { key: "suv", label: "SUV / 4x4" },
   { key: "utilitaire", label: "Utilitaires" },
 ];
 
 const FAQ = [
-  { q: "Quel âge faut-il pour louer un véhicule ?", a: "Le conducteur doit avoir au moins 21 ans et détenir un permis de conduire valide depuis plus de 2 ans. Pour certains SUV et utilitaires, l'âge minimum est porté à 23 ans. Une majoration « jeune conducteur » peut s'appliquer en dessous de 25 ans." },
-  { q: "Quel est le montant de la caution ?", a: "La caution est pré-autorisée sur la carte bancaire du conducteur principal au retrait du véhicule : de 800 € pour une citadine à 1 500 € pour un utilitaire. Elle est restituée sous 7 jours après restitution du véhicule, sans dommage." },
-  { q: "Le plein d'essence est-il inclus ?", a: "Le véhicule est remis avec le plein. Vous le restituez avec le plein effectué. À défaut, le carburant manquant vous est facturé au tarif local en vigueur, majoré de frais de service. Des stations partenaires sont indiquées près de chaque agence." },
-  { q: "Le kilométrage est-il vraiment illimité ?", a: "Oui. Tous nos forfaits incluent le kilométrage illimité sur l'ensemble de Mayotte (Grande-Terre et Petite-Terre), sans surprise. Parcourez l'île librement, de Mamoudzou à Chirongui." },
-  { q: "Puis-je récupérer le véhicule à l'aéroport et le rendre à Mamoudzou ?", a: "Oui, l'aller simple entre nos agences est possible (Aéroport, Mamoudzou, Chirongui). Précisez l'agence de retour lors de la pré-réservation ; des frais d'inter-agence réduits peuvent s'appliquer selon le trajet." },
-  { q: "Que comprend l'assistance 24/7 ?", a: "Une ligne dédiée joignable à toute heure en cas de panne, crevaison ou accident, partout sur l'île. Dépannage et véhicule de remplacement organisés rapidement pour ne pas gâcher votre séjour ou votre activité." },
+  { q: "Les véhicules sont-ils contrôlés avant la vente ?", a: "Oui. Chaque véhicule passe par un contrôle technique complet avant mise en vente. Nous vous fournissons le rapport d'état, l'historique d'entretien et le carnet de bord. Aucune mauvaise surprise après l'achat." },
+  { q: "Proposez-vous un financement ?", a: "Oui, nous travaillons avec des partenaires financiers locaux pour vous proposer des solutions de crédit adaptées à votre budget. Simulation gratuite sur place ou par téléphone." },
+  { q: "Puis-je faire un essai avant d'acheter ?", a: "Bien sûr. L'essai routier est inclus pour tout véhicule, sur rendez-vous dans l'un de nos showrooms. Prenez le temps de tester le véhicule dans les conditions réelles de l'île." },
+  { q: "Reprenez-vous mon ancien véhicule ?", a: "Oui, nous proposons une reprise de votre véhicule actuel, estimée gratuitement sur place. Le montant de la reprise peut être déduit directement du prix d'achat de votre nouveau véhicule." },
+  { q: "Quelle garantie est incluse ?", a: "Tous nos véhicules sont vendus avec une garantie panne moteur/boîte de vitesses de 6 mois minimum. Des extensions de garantie jusqu'à 24 mois sont disponibles selon le véhicule." },
+  { q: "Les démarches administratives sont-elles incluses ?", a: "Nous nous occupons de toutes les formalités : certificat de cession, demande d'immatriculation, contrôle technique si nécessaire. Vous repartez avec votre véhicule sans stress administratif." },
 ];
 
 const CONTACTS = {
-  prebookMamoudzou: "269 627 627",
-  prebookAeroport: "0639 69 02 06",
-  agenceMamoudzou: "0269 61 46 92",
-  agenceAeroport: "0269 60 54 95",
+  mainPhone: "269 627 627",
+  mamoudzou: "0269 61 46 92",
+  whatsapp: "262639690206",
 };
 
 const STEPS = [
-  { n: "01", icon: "calendar", title: "Pré-réservez en ligne", desc: "Choisissez vos agences de départ et de retour, vos dates et votre véhicule. En 2 minutes, sans paiement en ligne." },
-  { n: "02", icon: "msg", title: "On confirme la dispo", desc: "Notre équipe vous rappelle sous quelques heures pour valider la disponibilité et répondre à vos questions." },
-  { n: "03", icon: "car", title: "Récupérez les clés", desc: "Présentez-vous à l'agence — à la barge, à l'aéroport ou dans le Sud. Véhicule prêt, plein fait, et c'est parti." },
+  { n: "01", icon: "car", title: "Choisissez votre véhicule", desc: "Parcourez notre catalogue en ligne ou visitez l'un de nos showrooms. Filtrez par budget, type ou kilométrage." },
+  { n: "02", icon: "calendar", title: "Prenez rendez-vous", desc: "Contactez-nous par téléphone ou WhatsApp. On organise l'essai et la visite du véhicule à votre convenance." },
+  { n: "03", icon: "shield", title: "Repartez propriétaire", desc: "Signature, formalités administratives, remise des clés — tout se règle chez nous. Simple et rapide." },
 ];
 
 const STATS = [
-  { v: "12 ans", l: "de location à Mayotte" },
-  { v: "3", l: "agences sur l'île" },
-  { v: "24/7", l: "assistance partout" },
-  { v: "∞", l: "kilométrage illimité" },
+  { v: "12 ans", l: "d'expérience à Mayotte" },
+  { v: "200+", l: "véhicules vendus / an" },
+  { v: "6 mois", l: "de garantie incluse" },
+  { v: "2", l: "showrooms sur l'île" },
 ];
 
 const TESTIMONIALS = [
-  { name: "Camille R.", role: "Touriste · métropole", rating: 5, img: "avis-camille",
-    text: "Récupération à l'aéroport à la descente de l'avion, voiture climatisée et nickel. On a fait le tour de l'île sans stresser le kilométrage. Service au top." },
-  { name: "Anrafa M.", role: "Artisan · Mamoudzou", rating: 5, img: "avis-anrafa",
-    text: "Je loue régulièrement un utilitaire pour mes chantiers. Toujours dispo, bien entretenu, et l'équipe dépanne vite quand j'ai un imprévu. Loueur local fiable." },
+  { name: "Camille R.", role: "Acheteuse · Mamoudzou", rating: 5, img: "avis-camille",
+    text: "J'ai trouvé mon Duster en parfait état à un prix honnête. L'essai s'est fait le lendemain, les papiers étaient prêts en 48h. Équipe sérieuse et à l'écoute." },
+  { name: "Anrafa M.", role: "Artisan · Kawéni", rating: 5, img: "avis-anrafa",
+    text: "Deuxième utilitaire acheté chez Garcia. Toujours du matériel bien entretenu, zéro surprise après l'achat. Le financement a été arrangé rapidement, je recommande." },
   { name: "Sophie L.", role: "Fonctionnaire · mutée", rating: 5, img: "avis-sophie",
-    text: "Arrivée en mutation, j'avais besoin d'un véhicule rapidement. Pré-réservation simple, tarif dégressif sur le mois. La nouvelle agence de Chirongui m'arrange beaucoup." },
+    text: "Arrivée en mutation, j'avais besoin d'un véhicule fiable rapidement. Ils m'ont trouvé une C3 en très bon état dans mon budget. Formalités gérées en un jour." },
 ];
 
 const VEHICLE_TYPES = [

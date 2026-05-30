@@ -19,9 +19,9 @@ function HowItWorks({ onPrebook }) {
         <div className="sec-head reveal" style={{marginBottom:48}}>
           <div>
             <span className="eyebrow">Comment ça marche</span>
-            <h2 style={{marginTop:14}}>Sur la route<br/>en trois étapes.</h2>
+            <h2 style={{marginTop:14}}>Achetez votre véhicule<br/>en trois étapes.</h2>
           </div>
-          <p>Pas de paiement en ligne, pas de comptoir interminable. Vous réservez, on confirme, vous roulez.</p>
+          <p>Pas de prise de tête. Vous choisissez, on organise l'essai, vous repartez propriétaire.</p>
         </div>
 
         <div className="steps reveal">
