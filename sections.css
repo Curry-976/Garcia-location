@@ -2,6 +2,349 @@
    GARCIA AUTOMOBILES — Premium UI/UX Pro Max Redesign
    ============================================================ */
 
+/* ================================================================
+   HERO RACHAT — Plate Widget + Trust Bar
+   ================================================================ */
+
+/* Hero layout */
+.hero-rachat {
+  position: relative;
+  padding-top: clamp(120px, 17vh, 190px);
+  padding-bottom: clamp(40px, 6vh, 80px);
+  overflow: hidden;
+}
+.hero-rachat-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(36px, 5vw, 80px);
+  align-items: center;
+}
+
+/* Ambient glow behind widget */
+.hero-rachat-glow {
+  position: absolute;
+  top: -10%; right: -5%; width: 520px; height: 520px; z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    color-mix(in oklch, var(--accent) 28%, transparent),
+    transparent 65%);
+  filter: blur(70px);
+  pointer-events: none;
+}
+.hero-rachat-glow-2 {
+  position: absolute;
+  bottom: -15%; left: 10%; width: 400px; height: 300px; z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    color-mix(in oklch, var(--accent-2) 20%, transparent),
+    transparent 65%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+/* Left copy */
+.hero-rc-copy { position: relative; z-index: 1; }
+.hero-rc-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-dim);
+  padding: 7px 14px; border-radius: 999px;
+  border: 1px solid var(--hair); background: var(--tint-1);
+  width: fit-content; margin-bottom: 26px;
+}
+.hero-rc-h1 {
+  font-size: clamp(42px, 7vw, 92px);
+  font-weight: 800; line-height: 0.92; letter-spacing: -0.045em;
+  margin: 0 0 32px;
+}
+.hero-rc-h1 .accent { color: var(--accent); }
+
+/* Trust pill badges */
+.hero-rc-badges {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px;
+}
+.hero-rc-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--hair);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.02em;
+  color: var(--ink-dim);
+  transition: border-color .2s, color .2s;
+}
+.hero-rc-badge svg { color: var(--accent-2); flex: none; }
+.hero-rc-badge:hover { border-color: var(--ink-faint); color: var(--ink); }
+
+/* Floating price card (bottom-left) */
+.hero-rc-float {
+  position: absolute;
+  left: -20px;
+  bottom: -10px;
+  z-index: 3;
+  padding: 16px 20px;
+  border-radius: 18px;
+  min-width: 210px;
+  animation: floaty 7s ease-in-out infinite;
+  border: 1px solid var(--hair);
+  box-shadow: 0 20px 50px -16px rgba(0,0,0,0.5);
+}
+.hrf-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.hrf-label {
+  font-family: var(--font-mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint);
+}
+.hrf-sold {
+  font-family: var(--font-mono); font-size: 9.5px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 3px 8px; border-radius: 999px;
+  background: color-mix(in oklch, var(--accent-2) 18%, transparent);
+  color: var(--accent-2);
+  border: 1px solid color-mix(in oklch, var(--accent-2) 35%, transparent);
+}
+.hrf-price {
+  font-family: var(--font-mono); font-size: 28px; font-weight: 500;
+  letter-spacing: -0.03em; color: var(--accent);
+  line-height: 1;
+}
+.hrf-sub {
+  font-size: 13px; color: var(--ink-dim); margin-top: 6px; line-height: 1.3;
+}
+.hrf-sub span { display: block; font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
+
+/* ---- Widget card (right column) ---- */
+.hero-rc-right { position: relative; z-index: 1; }
+
+@keyframes widgetGlow {
+  0%, 100% { box-shadow: 0 0 0 1px color-mix(in oklch, var(--accent) 35%, transparent),
+                          0 32px 64px -24px rgba(0,0,0,0.55); }
+  50%       { box-shadow: 0 0 0 2px color-mix(in oklch, var(--accent) 60%, transparent),
+                          0 32px 64px -24px rgba(0,0,0,0.55); }
+}
+
+.widget-card {
+  position: relative;
+  padding: 32px 28px 28px;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid color-mix(in oklch, var(--accent) 30%, transparent);
+  animation: widgetGlow 3.2s ease-in-out infinite;
+}
+
+/* Live indicator dot */
+.widget-live {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-faint);
+  margin-bottom: 22px;
+}
+.widget-live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #22c55e 25%, transparent);
+  animation: pulse 2s infinite;
+  flex: none;
+}
+
+.widget-title {
+  font-size: 22px; font-weight: 800; letter-spacing: -0.03em;
+  margin-bottom: 6px;
+}
+.widget-sub {
+  font-size: 13.5px; color: var(--ink-dim); margin-bottom: 24px; line-height: 1.5;
+}
+
+/* ---- French license plate input ---- */
+.plate-label {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-faint);
+  display: block; margin-bottom: 8px; font-weight: 600;
+}
+
+.plate-input-wrap {
+  display: flex; align-items: stretch;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px -6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+  border: 2px solid #003189;
+  background: #fff;
+  margin-bottom: 18px;
+  transition: box-shadow .2s;
+}
+.plate-input-wrap:focus-within {
+  box-shadow: 0 4px 24px -4px rgba(0,49,137,0.45), 0 0 0 3px rgba(0,49,137,0.25);
+}
+
+.plate-eu-strip {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  width: 38px; flex: none;
+  background: #003189;
+  padding: 6px 4px;
+  gap: 3px;
+  border-radius: 0;
+}
+.plate-eu-star {
+  font-size: 10px; color: #FFCC00; line-height: 1;
+  letter-spacing: -1px;
+}
+.plate-eu-f {
+  font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+  color: #fff; letter-spacing: 0;
+}
+
+.plate-number-input {
+  flex: 1;
+  background: #fff;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #1a1a2e;
+  text-align: center;
+  padding: 14px 10px;
+  caret-color: #003189;
+}
+.plate-number-input::placeholder {
+  color: #b0b8cc;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+/* ---- Mileage field ---- */
+.km-field-wrap { margin-bottom: 22px; }
+.km-input-row {
+  display: flex; gap: 0; align-items: stretch;
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: var(--tint-1);
+  transition: border-color .2s, background .2s;
+}
+.km-input-row:focus-within {
+  border-color: color-mix(in oklch, var(--accent) 60%, transparent);
+  background: var(--tint-2);
+}
+.km-number {
+  flex: 1; background: transparent; border: none; outline: none;
+  padding: 14px 16px;
+  font-family: var(--font-mono); font-size: 16px;
+  color: var(--ink); letter-spacing: 0.02em;
+}
+.km-number::placeholder { color: var(--ink-faint); }
+.km-unit {
+  display: flex; align-items: center; padding: 0 16px;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-faint);
+  border-left: 1px solid var(--hair); background: var(--tint-1);
+  font-weight: 600;
+}
+
+/* CTA button override for widget */
+.widget-cta {
+  width: 100%;
+  font-size: 16px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  justify-content: center;
+  letter-spacing: 0.01em;
+}
+
+/* ================================================================
+   TRUST BAR
+   ================================================================ */
+.trust-bar {
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  background: var(--tint-1);
+  padding: 0;
+  overflow: hidden;
+}
+.trust-bar-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: stretch;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+.trust-bar-col {
+  display: flex; align-items: center; gap: 10px;
+  padding: 18px 0;
+  font-family: var(--font-mono); font-size: 12.5px;
+  letter-spacing: 0.02em; color: var(--ink-dim);
+  white-space: nowrap;
+}
+.trust-bar-col.center {
+  overflow: hidden;
+  border-left: 1px solid var(--hair);
+  border-right: 1px solid var(--hair);
+  padding: 18px 28px;
+  position: relative;
+}
+.trust-bar-col.right { padding-left: 28px; }
+
+.trust-star { color: #F0A14B; font-size: 14px; }
+.trust-rating { color: var(--ink); font-weight: 700; font-size: 14px; }
+
+/* Scrolling ticker */
+.ticker-track {
+  display: flex; gap: 0; width: max-content;
+  animation: ticker-scroll 22s linear infinite;
+}
+.trust-bar-col.center:hover .ticker-track { animation-play-state: paused; }
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0 32px; white-space: nowrap;
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-dim);
+}
+.ticker-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent); flex: none;
+}
+.ticker-price { color: var(--accent); font-weight: 700; }
+@keyframes ticker-scroll { to { transform: translateX(-50%); } }
+
+/* Counter blink */
+.trust-count {
+  font-family: var(--font-mono); font-size: 22px; font-weight: 500;
+  color: var(--accent); letter-spacing: -0.03em;
+}
+
+/* ================================================================
+   HERO RACHAT — RESPONSIVE
+   ================================================================ */
+@media (max-width: 900px) {
+  .hero-rachat-grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero-rc-right { order: -1; }
+  .hero-rc-float { left: auto; right: 16px; bottom: -10px; }
+  .trust-bar-inner { grid-template-columns: 1fr; }
+  .trust-bar-col.center { border-left: none; border-right: none;
+    border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+  .trust-bar-col.right { padding-left: 0; }
+}
+@media (max-width: 600px) {
+  .widget-card { padding: 22px 18px 20px; }
+  .plate-eu-strip { width: 32px; }
+  .plate-eu-f { font-size: 12px; }
+  .plate-eu-star { font-size: 8px; }
+  .plate-number-input { font-size: 18px; padding: 12px 6px; }
+  .hero-rc-h1 { letter-spacing: -0.035em; }
+  .hero-rc-float { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-rc-float { animation: none; }
+  .widget-card { animation: none; }
+  .ticker-track { animation: none; }
+}
+
 /* ----------------------------------------------------------------
    NAVBAR
 ---------------------------------------------------------------- */

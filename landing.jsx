@@ -128,69 +128,179 @@ function Navbar({ onContact, theme, onToggleTheme }) {
   );
 }
 
-/* ---------- HERO ---------- */
+/* ---------- HERO (Rachat — plate estimation widget) ---------- */
 function Hero({ onContact, onBrowse }) {
+  const [plate, setPlate] = useState("");
+  const [km, setKm] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  function formatPlate(raw) {
+    // Remove non-alphanumeric, uppercase, max 9 chars (AA-123-BB)
+    const clean = raw.replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 7);
+    if (clean.length <= 2) return clean;
+    if (clean.length <= 5) return clean.slice(0, 2) + "-" + clean.slice(2);
+    return clean.slice(0, 2) + "-" + clean.slice(2, 5) + "-" + clean.slice(5);
+  }
+
+  function handlePlate(e) {
+    setPlate(formatPlate(e.target.value));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!plate || !km) return;
+    setSubmitted(true);
+    onContact();
+  }
+
   return (
-    <header className="section hero-vo" id="top">
-      <div className="wrap hero-vo-grid">
-        <div className="hero-vo-copy reveal">
-          <div className="hero-vo-badge">
-            <span className="assist-dot"></span>
-            <span>Vendeur local · Mayotte</span>
+    <>
+      <header className="section hero-rachat" id="top">
+        <div className="hero-rachat-glow" aria-hidden="true"></div>
+        <div className="hero-rachat-glow-2" aria-hidden="true"></div>
+        <div className="wrap hero-rachat-grid">
+
+          {/* ---- LEFT: copy ---- */}
+          <div className="hero-rc-copy reveal">
+            <div className="hero-rc-eyebrow">
+              <span className="assist-dot"></span>
+              Rachat auto · Mayotte
+            </div>
+            <h1 className="hero-rc-h1">
+              Vendez votre voiture<br />
+              <span className="accent">au meilleur prix,</span><br />
+              en 24h.
+            </h1>
+            <div className="hero-rc-badges">
+              {[
+                { icon: "spark", text: "Offre en 2 min" },
+                { icon: "shield", text: "Paiement garanti" },
+                { icon: "tag", text: "Sans engagement" },
+              ].map((b, i) => (
+                <span key={i} className="hero-rc-badge">
+                  <Icon name={b.icon} size={14} /> {b.text}
+                </span>
+              ))}
+            </div>
           </div>
-          <h1 className="hero-vo-h1">
-            Votre prochain<br />
-            véhicule,<br />
-            <span className="grad">au juste prix.</span>
-          </h1>
-          <p className="hero-vo-sub">
-            Citadines, SUV, utilitaires — tous contrôlés, garantis 6 mois,
-            avec financement et reprise possible. 12 ans d'expérience à Mayotte.
-          </p>
-          <div className="hero-vo-actions">
-            <button className="btn btn-accent btn-lg" onClick={onBrowse}>
-              Voir le catalogue <Icon name="arrowR" size={17} />
-            </button>
-            <a href={"https://wa.me/" + CONTACTS.whatsapp} target="_blank" rel="noreferrer"
-              className="btn btn-ghost btn-lg">
-              <Icon name="whatsapp" size={18} /> WhatsApp
-            </a>
-          </div>
-          <div className="hero-vo-trust">
-            {[
-              { icon: "shield", text: "Garantie 6 mois" },
-              { icon: "tag", text: "Financement dispo" },
-              { icon: "car", text: "Reprise véhicule" },
-              { icon: "spark", text: "Contrôle technique" },
-            ].map((t, i) => (
-              <div key={i} className="hero-vo-trust-item">
-                <Icon name={t.icon} size={14} />
-                <span>{t.text}</span>
+
+          {/* ---- RIGHT: widget card ---- */}
+          <div className="hero-rc-right reveal">
+            <div className="widget-card glass-strong">
+              {/* Live indicator */}
+              <div className="widget-live">
+                <span className="widget-live-dot"></span>
+                Estimation en direct
               </div>
+
+              <div className="widget-title">Quelle est votre voiture ?</div>
+              <p className="widget-sub">Entrez votre plaque et kilométrage pour recevoir une offre immédiate.</p>
+
+              <form onSubmit={handleSubmit}>
+                {/* French license plate input */}
+                <label className="plate-label">Immatriculation</label>
+                <div className="plate-input-wrap">
+                  <div className="plate-eu-strip" aria-hidden="true">
+                    <span className="plate-eu-star">★</span>
+                    <span className="plate-eu-f">F</span>
+                  </div>
+                  <input
+                    className="plate-number-input"
+                    type="text"
+                    placeholder="AA-123-BB"
+                    value={plate}
+                    onChange={handlePlate}
+                    maxLength={9}
+                    autoComplete="off"
+                    spellCheck={false}
+                    aria-label="Numéro d'immatriculation"
+                    inputMode="text"
+                  />
+                </div>
+
+                {/* Mileage input */}
+                <div className="km-field-wrap">
+                  <label className="plate-label">Kilométrage</label>
+                  <div className="km-input-row">
+                    <input
+                      className="km-number"
+                      type="number"
+                      placeholder="72 000"
+                      value={km}
+                      onChange={e => setKm(e.target.value)}
+                      min={0}
+                      max={999999}
+                      aria-label="Kilométrage du véhicule"
+                      inputMode="numeric"
+                    />
+                    <span className="km-unit">km</span>
+                  </div>
+                </div>
+
+                <button type="submit" className="btn btn-accent btn-lg widget-cta">
+                  Estimer mon prix <Icon name="arrowR" size={17} />
+                </button>
+              </form>
+            </div>
+
+            {/* Floating price card */}
+            <div className="hero-rc-float glass">
+              <div className="hrf-top">
+                <span className="hrf-label">Dernier rachat</span>
+                <span className="hrf-sold">Vendu ✓</span>
+              </div>
+              <div className="hrf-price">8 200 €</div>
+              <div className="hrf-sub">
+                Renault Clio IV
+                <span>2019 · 68 000 km</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      {/* ---- Trust bar ---- */}
+      <TrustBar />
+    </>
+  );
+}
+
+/* ---------- TRUST BAR ---------- */
+function TrustBar() {
+  const sales = [
+    { car: "Renault Clio", km: "72 000 km", price: "6 800 €" },
+    { car: "Peugeot 208", km: "55 000 km", price: "7 400 €" },
+    { car: "Toyota Yaris", km: "88 000 km", price: "5 900 €" },
+    { car: "Dacia Sandero", km: "43 000 km", price: "8 100 €" },
+    { car: "Citroën C3", km: "61 000 km", price: "6 200 €" },
+    { car: "Ford Fiesta", km: "79 000 km", price: "5 500 €" },
+  ];
+  const row = [...sales, ...sales];
+  return (
+    <div className="trust-bar" aria-label="Indicateurs de confiance">
+      <div className="trust-bar-inner">
+        <div className="trust-bar-col">
+          <span className="trust-star">★</span>
+          <span className="trust-rating">4,8/5</span>
+          <span>· 200+ rachats</span>
+        </div>
+        <div className="trust-bar-col center" aria-live="off">
+          <div className="ticker-track">
+            {row.map((s, i) => (
+              <span key={i} className="ticker-item">
+                <span className="ticker-dot" aria-hidden="true"></span>
+                {s.car} · {s.km} ·&nbsp;<span className="ticker-price">{s.price}</span>
+              </span>
             ))}
           </div>
         </div>
-
-        <div className="hero-vo-visual reveal">
-          <div className="hero-vo-glow" aria-hidden="true"></div>
-          <div className="hero-vo-img">
-            <image-slot id="hero-car" placeholder="Véhicule phare Garcia Automobiles" shape="rect"></image-slot>
-          </div>
-          <div className="hero-vo-floating-card glass">
-            <div className="hfc-top">
-              <span className="hfc-label">Véhicule du moment</span>
-              <span className="hfc-cat">SUV</span>
-            </div>
-            <div className="hfc-name">Toyota RAV4 Hybride</div>
-            <div className="hfc-specs">
-              <span><Icon name="calendar" size={12} /> 2022</span>
-              <span><Icon name="route" size={12} /> 22 000 km</span>
-            </div>
-            <div className="hfc-price">27 900 €</div>
-          </div>
+        <div className="trust-bar-col right">
+          <span>Offres aujourd'hui :</span>
+          <span className="trust-count">47</span>
         </div>
       </div>
-    </header>
+    </div>
   );
 }
 
@@ -447,4 +557,4 @@ function FloatCTA({ onContact }) {
   );
 }
 
-Object.assign(window, { Navbar, Hero, Marquee, Fleet, Bento, Faq, Footer, FloatCTA, useReveal, CarCard });
+Object.assign(window, { Navbar, Hero, TrustBar, Marquee, Fleet, Bento, Faq, Footer, FloatCTA, useReveal, CarCard });
