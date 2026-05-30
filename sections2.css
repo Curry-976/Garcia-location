@@ -2,6 +2,190 @@
    GARCIA LOCATION — "real rental site" sections
    ============================================================ */
 
+/* ---------------- STATS BAR ---------------- */
+.stats-bar {
+  background: var(--tint-1);
+  border-top: 1px solid var(--hair-soft);
+  border-bottom: 1px solid var(--hair-soft);
+  padding: 40px 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 24px;
+  border-right: 1px solid var(--hair-soft);
+  text-align: center;
+}
+.stat-item:last-child { border-right: none; }
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---------------- HOW IT WORKS (new) ---------------- */
+.hiw-section { overflow: hidden; }
+.hiw-steps {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-top: 56px;
+  position: relative;
+}
+.hiw-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px;
+  position: relative;
+}
+.hiw-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.hiw-ic {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  color: var(--accent-2);
+  margin-bottom: 20px;
+  border: 1px solid var(--hair);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+}
+.hiw-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.hiw-desc {
+  font-size: 14px;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  max-width: 220px;
+  margin: 0 auto;
+}
+.hiw-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 32px;
+  gap: 4px;
+  color: var(--ink-faint);
+  flex-shrink: 0;
+}
+.hiw-line {
+  width: 32px;
+  height: 1px;
+  background: var(--hair);
+  margin-bottom: 2px;
+}
+
+/* ---------------- TESTIMONIALS ---------------- */
+.testi-track-wrap {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hair) transparent;
+  padding: 16px var(--pad-x) 32px;
+  -webkit-overflow-scrolling: touch;
+}
+.testi-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  padding-bottom: 4px;
+}
+.testi-card {
+  width: 340px;
+  flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: default;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s;
+}
+.testi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px -12px rgba(0,0,0,0.45);
+}
+.stars { display: flex; gap: 3px; }
+.testi-quote {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-dim);
+  flex: 1;
+  font-style: italic;
+  margin: 0;
+}
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testi-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+.testi-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+.testi-role { font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-item:nth-child(2) { border-right: none; }
+  .hiw-steps { flex-direction: column; align-items: center; gap: 32px; }
+  .hiw-connector { flex-direction: row; padding-top: 0; transform: rotate(90deg); }
+  .hiw-step { padding: 0 16px; }
+  .hiw-desc { max-width: 300px; }
+}
+@media (max-width: 500px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .testi-card { width: 290px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testi-card:hover { transform: none; }
+  .stat-item { transition: none; }
+}
+
 /* ---------------- COMMENT ÇA MARCHE ---------------- */
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--hair-soft); border: 1px solid var(--hair-soft); border-radius: var(--radius-lg); overflow: hidden; }
 .step { position: relative; padding: 34px 30px 36px; background: var(--bg-1); }

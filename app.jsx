@@ -57,11 +57,12 @@ function App() {
           <Navbar onPrebook={()=>goPrebook(null)} theme={t.theme} onToggleTheme={toggleTheme} />
           <Hero widgetVariant={t.widgetVariant} state={search} set={setSearchPartial} onSearch={()=>goPrebook(null)} />
           <Marquee />
-          <HowItWorks onPrebook={()=>goPrebook(null)} />
+          <StatsBar />
+          <HowItWorksSection />
           <Fleet cardVariant={t.cardVariant} onPick={(c)=>goPrebook(c)} />
           <Agencies onPrebook={()=>goPrebook(null)} />
           <Bento />
-          <Testimonials />
+          <TestimonialsSection />
           <Faq />
           <FinalCTA onPrebook={()=>goPrebook(null)} />
           <Footer onPrebook={()=>goPrebook(null)} />
