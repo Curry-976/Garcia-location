@@ -2,7 +2,7 @@
 const { useState, useEffect } = React;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "theme": "dark",
+  "theme": "light",
   "accent": "safran",
   "blur": 20,
   "typeface": "clash"
