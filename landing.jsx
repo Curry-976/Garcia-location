@@ -161,15 +161,15 @@ function Hero({ onContact, onBrowse }) {
         <div className="wrap hero-rachat-grid">
 
           {/* ---- LEFT: copy ---- */}
-          <div className="hero-rc-copy reveal">
+          <div className="hero-rc-copy">
             <div className="hero-rc-eyebrow">
               <span className="assist-dot"></span>
               Rachat auto · Mayotte
             </div>
             <h1 className="hero-rc-h1">
-              Vendez votre voiture<br />
-              <span className="accent">au meilleur prix,</span><br />
-              en 24h.
+              <span className="hero-line"><span className="hero-line-inner">Vendez votre voiture</span></span>
+              <span className="hero-line"><span className="hero-line-inner accent">au meilleur prix,</span></span>
+              <span className="hero-line"><span className="hero-line-inner">en 24h.</span></span>
             </h1>
             <div className="hero-rc-badges">
               {[
@@ -185,7 +185,7 @@ function Hero({ onContact, onBrowse }) {
           </div>
 
           {/* ---- RIGHT: widget card ---- */}
-          <div className="hero-rc-right reveal">
+          <div className="hero-rc-right">
             <div className="widget-card glass-strong">
               {/* Live indicator */}
               <div className="widget-live">
