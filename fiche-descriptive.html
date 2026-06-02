@@ -9,512 +9,361 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --navy:   #0A0F1E;
-      --navy2:  #111827;
-      --pearl:  #E4F0F6;
-      --pearl2: #F5FAFD;
-      --orange: #F0A14B;
-      --orange2:#E8913A;
-      --ink:    #0A0F1E;
-      --muted:  #4B5563;
-      --border: #D1E3ED;
+      --navy: #0A0F1E; --pearl: #E4F0F6; --pearl2: #F5FAFD;
+      --orange: #F0A14B; --orange2: #E8913A;
+      --muted: #4B5563; --border: #D1E3ED;
       --mono: "IBM Plex Mono", monospace;
       --sans: "Inter", system-ui, sans-serif;
     }
+    body { font-family: var(--sans); background: #edf2f7; color: var(--navy); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
-    body {
-      font-family: var(--sans);
-      background: #f0f4f8;
-      color: var(--ink);
-      font-size: 14px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .print-bar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: var(--navy); color: #fff;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 24px; gap: 16px;
-    }
-    .print-bar span { font-family: var(--mono); font-size: 12px; opacity: 0.6; }
-    .print-bar button {
-      font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;
-      background: var(--orange); color: var(--navy); border: none; cursor: pointer;
-      padding: 8px 20px; border-radius: 4px; font-weight: 500;
-      transition: background 0.2s;
-    }
+    /* Print bar */
+    .print-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; }
+    .print-bar span { font-family: var(--mono); font-size: 12px; opacity: 0.55; }
+    .print-bar button { font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; background: var(--orange); color: var(--navy); border: none; cursor: pointer; padding: 8px 20px; border-radius: 4px; font-weight: 500; }
     .print-bar button:hover { background: var(--orange2); }
 
-    .page {
-      width: 794px;
-      min-height: 1123px;
-      margin: 80px auto 40px;
-      background: #fff;
-      box-shadow: 0 4px 40px rgba(10,15,30,0.15);
-      display: flex; flex-direction: column;
-      page-break-after: always;
-    }
+    /* Page */
+    .page { width: 794px; min-height: 1123px; margin: 76px auto 0; background: #fff; box-shadow: 0 4px 48px rgba(10,15,30,0.14); display: flex; flex-direction: column; page-break-after: always; }
     .page + .page { margin-top: 0; }
 
-    .doc-header {
-      background: var(--navy);
-      color: #fff;
-      padding: 40px 48px 36px;
-      display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 24px;
-    }
-    .doc-header-left { flex: 1; }
-    .doc-label {
-      font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--orange); margin-bottom: 10px;
-    }
-    .doc-title {
-      font-size: 26px; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
-      color: #fff;
-    }
-    .doc-subtitle {
-      font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 6px;
-    }
-    .doc-meta {
-      text-align: right; font-family: var(--mono); font-size: 11px;
-      color: rgba(255,255,255,0.45); line-height: 1.8;
-    }
+    /* Header */
+    .doc-header { background: var(--navy); padding: 42px 48px 38px; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+    .doc-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+    .doc-title { font-size: 27px; font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; color: #fff; }
+    .doc-subtitle { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 7px; }
+    .doc-meta { text-align: right; font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.9; }
     .doc-meta strong { color: var(--orange); font-weight: 500; }
-
     .accent-bar { height: 3px; background: var(--orange); }
 
-    .doc-body { padding: 40px 48px; flex: 1; display: flex; flex-direction: column; gap: 36px; }
+    /* Body */
+    .doc-body { padding: 40px 48px; flex: 1; display: flex; flex-direction: column; gap: 34px; }
 
-    .sec-head {
-      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
-    }
-    .sec-num {
-      font-family: var(--mono); font-size: 10px; color: var(--orange);
-      background: rgba(240,161,75,0.12); border: 1px solid rgba(240,161,75,0.3);
-      padding: 2px 8px; border-radius: 3px; letter-spacing: 0.1em;
-    }
-    .sec-title {
-      font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--navy);
-    }
-    .sec-rule { flex: 1; height: 1px; background: var(--border); }
+    /* Section head */
+    .sh { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .sh-n { font-family: var(--mono); font-size: 10px; color: var(--orange); background: rgba(240,161,75,0.1); border: 1px solid rgba(240,161,75,0.28); padding: 2px 8px; border-radius: 3px; letter-spacing: 0.1em; }
+    .sh-t { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--navy); }
+    .sh-r { flex: 1; height: 1px; background: var(--border); }
 
-    .intro-box {
-      background: var(--pearl2); border-left: 3px solid var(--orange);
-      padding: 18px 20px; border-radius: 0 6px 6px 0;
-      font-size: 13.5px; color: var(--ink); line-height: 1.7;
-    }
-    .intro-box strong { color: var(--navy); font-weight: 600; }
+    /* Intro */
+    .intro { background: var(--pearl2); border-left: 3px solid var(--orange); padding: 18px 20px; border-radius: 0 6px 6px 0; font-size: 13.5px; line-height: 1.72; }
+    .intro strong { color: var(--navy); font-weight: 600; }
 
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    thead tr { background: var(--navy); color: #fff; }
-    thead th {
-      font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 10px 14px; text-align: left; font-weight: 500;
-    }
+    /* Status badge strip */
+    .status-strip { display: flex; gap: 10px; flex-wrap: wrap; }
+    .badge { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; padding: 5px 12px; border-radius: 4px; border: 1px solid; }
+    .badge.green { color: #166534; background: #dcfce7; border-color: #bbf7d0; }
+    .badge.blue  { color: #1e40af; background: #dbeafe; border-color: #bfdbfe; }
+    .badge.amber { color: #92400e; background: #fef3c7; border-color: #fde68a; }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* Feature grid */
+    .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .feat { display: flex; gap: 12px; align-items: flex-start; background: var(--pearl2); border: 1px solid var(--border); border-radius: 6px; padding: 13px 15px; }
+    .feat-ico { width: 32px; height: 32px; border-radius: 6px; background: rgba(240,161,75,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .feat-ico svg { width: 16px; height: 16px; color: var(--orange); }
+    .feat strong { display: block; font-size: 12.5px; font-weight: 600; color: var(--navy); }
+    .feat span { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    thead tr { background: var(--navy); }
+    thead th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 9px 14px; text-align: left; color: rgba(255,255,255,0.85); font-weight: 500; }
     tbody tr { border-bottom: 1px solid var(--border); }
     tbody tr:nth-child(even) { background: var(--pearl2); }
-    tbody td { padding: 10px 14px; vertical-align: top; line-height: 1.5; }
-    tbody td:first-child { font-weight: 600; white-space: nowrap; color: var(--navy); width: 36%; }
-    tbody td.hours { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; text-align: right; }
+    tbody td { padding: 9px 14px; vertical-align: top; line-height: 1.5; }
+    tbody td.label { font-weight: 600; color: var(--navy); white-space: nowrap; width: 34%; }
+    tbody td.right { text-align: right; font-family: var(--mono); font-size: 11.5px; color: var(--muted); white-space: nowrap; }
 
-    .deliv-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    }
-    .deliv-item {
-      display: flex; align-items: flex-start; gap: 10px;
-      background: var(--pearl2); border: 1px solid var(--border);
-      border-radius: 6px; padding: 12px 14px;
-      font-size: 12.5px; line-height: 1.5;
-    }
-    .deliv-icon {
-      width: 20px; height: 20px; border-radius: 4px;
-      background: rgba(240,161,75,0.15); color: var(--orange);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: 1px;
-    }
-    .deliv-icon svg { width: 12px; height: 12px; }
-    .deliv-item strong { display: block; font-weight: 600; font-size: 12px; color: var(--navy); }
-    .deliv-item span { font-size: 11.5px; color: var(--muted); }
+    /* Pricing */
+    .pricing { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .pr { display: flex; align-items: center; justify-content: space-between; padding: 11px 18px; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .pr:last-child { border-bottom: none; }
+    .pr.alt { background: var(--pearl2); }
+    .pr.total { background: var(--navy); color: #fff; }
+    .pr .lbl { font-weight: 500; }
+    .pr .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .pr.total .sub { color: rgba(255,255,255,0.45); }
+    .pr .amt { font-family: var(--mono); font-weight: 600; white-space: nowrap; color: var(--navy); }
+    .pr.total .amt { color: var(--orange); font-size: 20px; }
 
-    .pricing-table { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-    .pricing-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 11px 18px; border-bottom: 1px solid var(--border);
-      font-size: 13px;
-    }
-    .pricing-row:last-child { border-bottom: none; }
-    .pricing-row.total {
-      background: var(--navy); color: #fff;
-      font-weight: 700; font-size: 15px;
-    }
-    .pricing-row.total .price { color: var(--orange); font-family: var(--mono); }
-    .pricing-row.sub { background: var(--pearl2); }
-    .pricing-row .label { color: var(--ink); }
-    .pricing-row .note { font-size: 11px; color: var(--muted); margin-top: 1px; }
-    .pricing-row .price {
-      font-family: var(--mono); font-weight: 600; font-size: 13px;
-      color: var(--navy); white-space: nowrap;
-    }
+    /* Includes */
+    .inc-list { display: flex; flex-direction: column; gap: 8px; }
+    .inc { display: flex; align-items: baseline; gap: 10px; font-size: 12.5px; }
+    .inc::before { content: ""; display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 6px; }
 
-    .includes-list { display: flex; flex-direction: column; gap: 8px; }
-    .inc-item {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 12.5px; color: var(--ink);
-    }
-    .inc-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--orange); flex-shrink: 0;
-    }
+    /* Conditions row */
+    .cond-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cond { background: var(--pearl2); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+    .cond-lbl { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+    .cond-val { font-weight: 700; font-size: 14px; color: var(--navy); }
+    .cond-sub { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
 
-    .sig-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-      margin-top: 4px;
-    }
-    .sig-box {
-      border: 1px solid var(--border); border-radius: 6px;
-      padding: 16px 18px;
-    }
-    .sig-box-title {
-      font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
-      color: var(--muted); margin-bottom: 12px;
-    }
-    .sig-line {
-      border-top: 1px dashed var(--border); margin-top: 40px; padding-top: 6px;
-      font-size: 11px; color: var(--muted);
-    }
-    .sig-fields { display: flex; flex-direction: column; gap: 10px; }
-    .sig-field { font-size: 12px; }
-    .sig-field label { display: block; font-size: 10px; font-family: var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-    .sig-field .fval { border-bottom: 1px solid var(--border); padding-bottom: 4px; color: var(--ink); min-height: 20px; }
+    /* Signature */
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .sig-box { border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+    .sig-lbl { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 14px; }
+    .sig-field { margin-bottom: 12px; }
+    .sig-field label { display: block; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+    .sig-field .line { border-bottom: 1px solid var(--border); min-height: 22px; }
+    .sig-sign { border-top: 1px dashed var(--border); margin-top: 36px; padding-top: 6px; font-size: 11px; color: var(--muted); }
 
-    .doc-footer {
-      background: var(--pearl); padding: 14px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-    .doc-footer-left { font-size: 11px; color: var(--muted); font-family: var(--mono); }
-    .doc-footer-right { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+    /* Footer */
+    .doc-footer { background: var(--pearl); padding: 13px 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
+    .doc-footer span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
     .doc-footer strong { color: var(--navy); }
 
     @media print {
-      body { background: #fff; font-size: 12px; }
+      body { background: #fff; }
       .print-bar { display: none !important; }
       .page { margin: 0; box-shadow: none; width: 100%; }
     }
-
     @media (max-width: 860px) {
       .page { width: 100%; margin: 60px 0 0; }
       .doc-header, .doc-body { padding: 28px 24px; }
-      .doc-footer { padding: 14px 24px; }
-      .deliv-grid { grid-template-columns: 1fr; }
-      .sig-grid { grid-template-columns: 1fr; }
+      .doc-footer { padding: 13px 24px; }
+      .feat-grid, .sig-grid, .cond-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <div class="print-bar">
-    <span>Garcia Automobiles — Proposition Commerciale</span>
-    <button onclick="window.print()">Imprimer / Exporter PDF</button>
-  </div>
+<div class="print-bar">
+  <span>Garcia Automobiles · Proposition Commerciale · GA-2025-001</span>
+  <button onclick="window.print()">Imprimer / Exporter PDF</button>
+</div>
 
-  <!-- PAGE 1 -->
-  <div class="page">
-    <div class="doc-header">
-      <div class="doc-header-left">
-        <div class="doc-label">Proposition commerciale</div>
-        <div class="doc-title">Site Web Vitrine<br />Garcia Automobiles</div>
-        <div class="doc-subtitle">Création sur-mesure — Maquette validée avant développement</div>
-      </div>
-      <div class="doc-meta">
-        <div>Référence : <strong>GA-2025-001</strong></div>
-        <div>Date : <strong>Juin 2025</strong></div>
-        <div>Validité : <strong>30 jours</strong></div>
-        <div style="margin-top:10px;">Prestataire :<br /><strong style="color:#fff;">Développeur Web Indépendant</strong></div>
-      </div>
+<!-- ═══ PAGE 1 ═══ -->
+<div class="page">
+  <div class="doc-header">
+    <div>
+      <div class="doc-label">Proposition commerciale · Site web</div>
+      <div class="doc-title">Site Web Professionnel<br />Garcia Automobiles</div>
+      <div class="doc-subtitle">Développement complet · Livraison immédiate · Prêt à mettre en ligne</div>
     </div>
-    <div class="accent-bar"></div>
-
-    <div class="doc-body">
-
-      <!-- 01 PRÉSENTATION -->
-      <div>
-        <div class="sec-head">
-          <span class="sec-num">01</span>
-          <span class="sec-title">Présentation du projet</span>
-          <span class="sec-rule"></span>
-        </div>
-        <div class="intro-box">
-          Ce document détaille l'ensemble des prestations réalisées pour la création du site web de <strong>Garcia Automobiles</strong>, spécialiste de la vente de véhicules d'occasion à Mayotte. Le site a été conçu de A à Z — design, développement, contenu — pour offrir une présence digitale professionnelle, moderne et efficace, adaptée aux besoins spécifiques du marché local.<br /><br />
-          Le travail présenté ci-dessous représente une <strong>prestation complète sur-mesure</strong>, incluant la conception graphique, le développement technique, l'intégration de toutes les données, et la livraison d'un produit finalisé prêt à l'emploi.
-        </div>
-      </div>
-
-      <!-- 02 TRAVAUX -->
-      <div>
-        <div class="sec-head">
-          <span class="sec-num">02</span>
-          <span class="sec-title">Détail des travaux réalisés</span>
-          <span class="sec-rule"></span>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Prestation</th>
-              <th>Description</th>
-              <th style="text-align:right;">Estimation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Design UI/UX</td>
-              <td>Conception de l'identité visuelle, du système de couleurs, de la typographie, et de l'ensemble des maquettes. Expérience utilisateur pensée pour convertir les visiteurs en acheteurs.</td>
-              <td class="hours">~12 h</td>
-            </tr>
-            <tr>
-              <td>Développement frontend</td>
-              <td>Intégration complète en React, composants interactifs, animations, système de réservation, filtres du catalogue véhicules, formulaire de contact pré-rempli.</td>
-              <td class="hours">~20 h</td>
-            </tr>
-            <tr>
-              <td>Responsive &amp; mobile</td>
-              <td>Adaptation soignée sur tous les formats d'écran (mobile, tablette, desktop). Tests sur iOS Safari, Chrome Android, Firefox. Aucun débordement horizontal.</td>
-              <td class="hours">~6 h</td>
-            </tr>
-            <tr>
-              <td>Intégration du contenu</td>
-              <td>Saisie et mise en forme du catalogue (9+ véhicules), fiches agences (3 showrooms), statistiques, témoignages, FAQ, et tous les textes du site.</td>
-              <td class="hours">~5 h</td>
-            </tr>
-            <tr>
-              <td>Performance &amp; optimisation</td>
-              <td>Chargement optimisé, images lazy-load, polices optimisées, animations fluides à 60fps, moteur de thème clair/sombre sans rechargement.</td>
-              <td class="hours">~4 h</td>
-            </tr>
-            <tr>
-              <td>SEO de base</td>
-              <td>Structure sémantique HTML5, balises meta, titres hiérarchisés, textes alternatifs, URL propres, balisage favorisant l'indexation par Google.</td>
-              <td class="hours">~2 h</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- 03 LIVRABLES -->
-      <div>
-        <div class="sec-head">
-          <span class="sec-num">03</span>
-          <span class="sec-title">Ce que vous recevez</span>
-          <span class="sec-rule"></span>
-        </div>
-        <div class="deliv-grid">
-          <div class="deliv-item">
-            <div class="deliv-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <div>
-              <strong>Code source complet</strong>
-              <span>Tous les fichiers HTML, CSS, JSX proprement organisés.</span>
-            </div>
-          </div>
-          <div class="deliv-item">
-            <div class="deliv-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            </div>
-            <div>
-              <strong>Design sur-mesure</strong>
-              <span>Identité visuelle unique, non basée sur un template. Style glassmorphisme haut de gamme.</span>
-            </div>
-          </div>
-          <div class="deliv-item">
-            <div class="deliv-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-            </div>
-            <div>
-              <strong>100% responsive</strong>
-              <span>Parfaitement adapté sur mobile, tablette et desktop. Testé sur les appareils réels.</span>
-            </div>
-          </div>
-          <div class="deliv-item">
-            <div class="deliv-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            </div>
-            <div>
-              <strong>Module de réservation</strong>
-              <span>Sélection de véhicule, dates, coordonnées — prêt à l'emploi.</span>
-            </div>
-          </div>
-          <div class="deliv-item">
-            <div class="deliv-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            </div>
-            <div>
-              <strong>3 agences intégrées</strong>
-              <span>Kawéni, Chirongui et Aéroport Dzaoudzi-Pamandzi.</span>
-            </div>
-          </div>
-          <div class="deliv-item">
-            <div class="deliv-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            </div>
-            <div>
-              <strong>Panneau de configuration</strong>
-              <span>Thème, couleur, typographie modifiables sans toucher au code.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="doc-footer">
-      <div class="doc-footer-left">Garcia Automobiles — Proposition Commerciale · Réf. GA-2025-001</div>
-      <div class="doc-footer-right">Page 1 / 2</div>
+    <div class="doc-meta">
+      <div>Réf. : <strong>GA-2025-001</strong></div>
+      <div>Date : <strong>Juin 2025</strong></div>
+      <div>Validité : <strong>30 jours</strong></div>
+      <div style="margin-top:12px;line-height:1.5;">Client :<br /><strong style="color:#fff;font-family:var(--sans);font-size:13px;">Garcia Automobiles<br />Mayotte</strong></div>
     </div>
   </div>
+  <div class="accent-bar"></div>
 
-  <!-- PAGE 2 -->
-  <div class="page">
-    <div class="accent-bar" style="background:var(--navy);height:4px;"></div>
+  <div class="doc-body">
 
-    <div class="doc-body">
-
-      <!-- 04 INCLUS -->
-      <div>
-        <div class="sec-head">
-          <span class="sec-num">04</span>
-          <span class="sec-title">Inclus après la livraison</span>
-          <span class="sec-rule"></span>
-        </div>
-        <div class="includes-list">
-          <div class="inc-item"><div class="inc-dot"></div>Mise en ligne sur GitHub Pages (hébergement gratuit inclus)</div>
-          <div class="inc-item"><div class="inc-dot"></div>Guide de prise en main pour modifier le catalogue de véhicules</div>
-          <div class="inc-item"><div class="inc-dot"></div>Support technique de 15 jours après livraison pour corrections mineures</div>
-          <div class="inc-item"><div class="inc-dot"></div>Livraison du dépôt Git complet (historique de développement inclus)</div>
-          <div class="inc-item"><div class="inc-dot"></div>1 révision graphique incluse (modification de couleur, texte, logo)</div>
+    <!-- ÉTAT DU PROJET -->
+    <div>
+      <div class="sh"><span class="sh-n">01</span><span class="sh-t">État du projet</span><span class="sh-r"></span></div>
+      <div style="margin-bottom:14px;">
+        <div class="status-strip">
+          <span class="badge green"><span class="badge-dot"></span>Site développé et fonctionnel</span>
+          <span class="badge green"><span class="badge-dot"></span>100 % responsive mobile</span>
+          <span class="badge green"><span class="badge-dot"></span>Prêt à mettre en ligne</span>
+          <span class="badge blue"><span class="badge-dot"></span>Code source livré</span>
+          <span class="badge amber"><span class="badge-dot"></span>Nom de domaine à configurer</span>
         </div>
       </div>
-
-      <!-- 05 TARIF -->
-      <div>
-        <div class="sec-head">
-          <span class="sec-num">05</span>
-          <span class="sec-title">Détail tarifaire</span>
-          <span class="sec-rule"></span>
-        </div>
-        <div class="pricing-table">
-          <div class="pricing-row sub">
-            <div>
-              <div class="label">Design UI/UX sur-mesure</div>
-              <div class="note">Maquettes, système de design, identité visuelle complète</div>
-            </div>
-            <div class="price">400 €</div>
-          </div>
-          <div class="pricing-row">
-            <div>
-              <div class="label">Développement frontend complet</div>
-              <div class="note">React, composants interactifs, animations, module réservation</div>
-            </div>
-            <div class="price">700 €</div>
-          </div>
-          <div class="pricing-row sub">
-            <div>
-              <div class="label">Intégration contenu &amp; responsive</div>
-              <div class="note">Catalogue, agences, textes, adaptation tous écrans</div>
-            </div>
-            <div class="price">250 €</div>
-          </div>
-          <div class="pricing-row">
-            <div>
-              <div class="label">Performance, SEO &amp; mise en ligne</div>
-              <div class="note">Optimisation technique, référencement, déploiement</div>
-            </div>
-            <div class="price">150 €</div>
-          </div>
-          <div class="pricing-row total">
-            <div>
-              <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;opacity:0.6;margin-bottom:4px;">Total TTC</div>
-              <div>Prestation complète — site livré et opérationnel</div>
-            </div>
-            <div class="price" style="font-size:22px;">1 500 €</div>
-          </div>
-        </div>
-        <div style="margin-top:10px;font-size:11px;color:var(--muted);font-family:var(--mono);">
-          * Prix en euros TTC. Paiement : 50% à la commande, 50% à la livraison.
-        </div>
+      <div class="intro">
+        Le site <strong>Garcia Automobiles</strong> est un site web professionnel <strong>entièrement développé et opérationnel</strong>. Ce n'est pas une maquette ni un prototype — c'est un produit fini, testé sur tous les appareils, avec toutes les fonctionnalités actives. Il suffit de le connecter à un nom de domaine pour qu'il soit visible sur Internet.<br /><br />
+        Il a été conçu pour <strong>vendre des véhicules d'occasion à Mayotte</strong> : catalogue interactif, 3 showrooms, formulaire de contact, réservation, témoignages et FAQ. Tout est intégré et personnalisé pour Garcia Automobiles.
       </div>
-
-      <!-- 06 CONDITIONS -->
-      <div>
-        <div class="sec-head">
-          <span class="sec-num">06</span>
-          <span class="sec-title">Conditions</span>
-          <span class="sec-rule"></span>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;">
-          <div style="background:var(--pearl2);border:1px solid var(--border);border-radius:6px;padding:14px 16px;">
-            <div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">Délai de réalisation</div>
-            <div style="font-weight:600;color:var(--navy);">7 à 14 jours ouvrés</div>
-            <div style="color:var(--muted);font-size:11.5px;margin-top:4px;">À compter de la validation et du versement de l'acompte</div>
-          </div>
-          <div style="background:var(--pearl2);border:1px solid var(--border);border-radius:6px;padding:14px 16px;">
-            <div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">Propriété du code</div>
-            <div style="font-weight:600;color:var(--navy);">Transférée à la livraison</div>
-            <div style="color:var(--muted);font-size:11.5px;margin-top:4px;">Le client est propriétaire du code source après paiement intégral</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 07 SIGNATURE -->
-      <div>
-        <div class="sec-head">
-          <span class="sec-num">07</span>
-          <span class="sec-title">Bon pour accord</span>
-          <span class="sec-rule"></span>
-        </div>
-        <div class="sig-grid">
-          <div class="sig-box">
-            <div class="sig-box-title">Le prestataire</div>
-            <div class="sig-fields">
-              <div class="sig-field">
-                <label>Nom &amp; prénom</label>
-                <div class="fval"></div>
-              </div>
-              <div class="sig-field">
-                <label>Date</label>
-                <div class="fval"></div>
-              </div>
-            </div>
-            <div class="sig-line">Signature</div>
-          </div>
-          <div class="sig-box">
-            <div class="sig-box-title">Le client — Garcia Automobiles</div>
-            <div class="sig-fields">
-              <div class="sig-field">
-                <label>Nom &amp; prénom</label>
-                <div class="fval"></div>
-              </div>
-              <div class="sig-field">
-                <label>Date</label>
-                <div class="fval"></div>
-              </div>
-            </div>
-            <div class="sig-line">Signature &amp; tampon "Bon pour accord"</div>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-    <div class="doc-footer">
-      <div class="doc-footer-left"><strong>Garcia Automobiles</strong> — Vente de véhicules d'occasion · Mayotte</div>
-      <div class="doc-footer-right">Page 2 / 2</div>
+    <!-- FONCTIONNALITÉS -->
+    <div>
+      <div class="sh"><span class="sh-n">02</span><span class="sh-t">Fonctionnalités du site</span><span class="sh-r"></span></div>
+      <div class="feat-grid">
+        <div class="feat">
+          <div class="feat-ico">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h8"/></svg>
+          </div>
+          <div>
+            <strong>Catalogue véhicules complet</strong>
+            <span>9 véhicules intégrés (citadines, SUV, utilitaires) avec filtres, prix, kilométrage, motorisation.</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <div>
+            <strong>Formulaire de réservation</strong>
+            <span>Sélection du véhicule, dates, coordonnées. Formulaire pré-rempli selon le véhicule choisi.</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+          </div>
+          <div>
+            <strong>3 showrooms intégrés</strong>
+            <span>Kawéni, Chirongui et Aéroport Dzaoudzi-Pamandzi. Adresse, horaires, téléphone, itinéraire Google Maps.</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <div>
+            <strong>Parfait sur mobile</strong>
+            <span>Testé sur iPhone, Android, tablette. Aucun débordement, navigation fluide, boutons accessibles.</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
+          <div>
+            <strong>Avis clients &amp; FAQ</strong>
+            <span>Section témoignages avec note 4,8/5, et FAQ accordéon répondant aux objections courantes.</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <strong>Thème clair / sombre</strong>
+            <span>Bascule instantanée clair/sombre sans rechargement. Couleurs d'accent et typographie configurables.</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div>
+            <strong>Performances optimisées</strong>
+            <span>Chargement rapide, animations 60fps, code léger sans framework lourd. Fonctionne sur connexion 3G.</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+          <div>
+            <strong>Structure SEO</strong>
+            <span>Balises HTML5 sémantiques, titres hiérarchisés, textes alt, structure favorisant l'indexation Google.</span>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- TRAVAIL RÉALISÉ -->
+    <div>
+      <div class="sh"><span class="sh-n">03</span><span class="sh-t">Travail réalisé</span><span class="sh-r"></span></div>
+      <table>
+        <thead>
+          <tr><th>Poste</th><th>Détail</th><th style="text-align:right;">Temps</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="label">Design UI/UX complet</td><td>Système de design sur-mesure (couleurs, typographie, composants), aucun template utilisé. Style glassmorphisme haut de gamme, identité propre à Garcia Automobiles.</td><td class="right">~12 h</td></tr>
+          <tr><td class="label">Développement frontend</td><td>Développement en React avec composants interactifs, animations fluides, gestion d'état, filtres catalogue, module de réservation, navigation mobile.</td><td class="right">~20 h</td></tr>
+          <tr><td class="label">Intégration du contenu</td><td>Saisie des 9 fiches véhicules, 3 agences, textes, témoignages, FAQ, statistiques. Tout le contenu est personnalisé pour Garcia Automobiles.</td><td class="right">~5 h</td></tr>
+          <tr><td class="label">Responsive &amp; tests</td><td>Tests sur iPhone 12/14, Android, tablette, desktop. Correction des débordements, adaptation de chaque section. Navigation mobile soignée.</td><td class="right">~6 h</td></tr>
+          <tr><td class="label">Performance &amp; SEO</td><td>Optimisation du code, structure sémantique, balises meta, polices optimisées, animations GPU-accelerated.</td><td class="right">~4 h</td></tr>
+          <tr><td class="label">Déploiement &amp; livraison</td><td>Mise en ligne sur GitHub Pages, dépôt Git organisé, guide de prise en main du catalogue.</td><td class="right">~2 h</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
+
+  <div class="doc-footer">
+    <span>Garcia Automobiles · Proposition Commerciale · Réf. GA-2025-001</span>
+    <span>Page 1 / 2</span>
+  </div>
+</div>
+
+<!-- ═══ PAGE 2 ═══ -->
+<div class="page">
+  <div class="accent-bar" style="background:var(--navy);height:4px;"></div>
+
+  <div class="doc-body">
+
+    <!-- CE QUE VOUS RECEVEZ -->
+    <div>
+      <div class="sh"><span class="sh-n">04</span><span class="sh-t">Ce que vous recevez à la livraison</span><span class="sh-r"></span></div>
+      <div class="inc-list">
+        <div class="inc"><strong>Le site web complet</strong> — tous les fichiers prêts à mettre en ligne (HTML, CSS, JavaScript). Aucune dépendance payante, aucun abonnement requis.</div>
+        <div class="inc"><strong>Code source organisé et commenté</strong> — structuré en modules clairs, modifiable par n'importe quel développeur.</div>
+        <div class="inc"><strong>Hébergement GitHub Pages inclus</strong> — gratuit, fiable, accessible depuis n'importe quel navigateur dans le monde.</div>
+        <div class="inc"><strong>Guide de mise à jour du catalogue</strong> — pour ajouter ou modifier un véhicule sans toucher au code HTML.</div>
+        <div class="inc"><strong>1 révision incluse</strong> — modification de texte, couleur, logo ou coordonnées dans les 15 jours suivant la livraison.</div>
+        <div class="inc"><strong>Support technique 15 jours</strong> — disponible par WhatsApp pour toute question après réception.</div>
+      </div>
+    </div>
+
+    <!-- TARIF -->
+    <div>
+      <div class="sh"><span class="sh-n">05</span><span class="sh-t">Détail tarifaire</span><span class="sh-r"></span></div>
+      <div class="pricing">
+        <div class="pr alt">
+          <div><div class="lbl">Design UI/UX sur-mesure</div><div class="sub">Identité visuelle, système de design complet, aucun template</div></div>
+          <div class="amt">400 €</div>
+        </div>
+        <div class="pr">
+          <div><div class="lbl">Développement frontend complet</div><div class="sub">React, composants interactifs, animations, module réservation</div></div>
+          <div class="amt">700 €</div>
+        </div>
+        <div class="pr alt">
+          <div><div class="lbl">Intégration contenu &amp; responsive</div><div class="sub">9 véhicules, 3 agences, textes, tests multi-appareils</div></div>
+          <div class="amt">250 €</div>
+        </div>
+        <div class="pr">
+          <div><div class="lbl">Performance, SEO &amp; déploiement</div><div class="sub">Optimisation, référencement, mise en ligne</div></div>
+          <div class="amt">150 €</div>
+        </div>
+        <div class="pr total">
+          <div>
+            <div style="font-family:var(--mono);font-size:9.5px;letter-spacing:0.12em;text-transform:uppercase;opacity:0.5;margin-bottom:4px;">Total TTC · Prestation complète</div>
+            <div style="font-size:15px;font-weight:700;">Site professionnel livré, opérationnel, prêt à diffuser</div>
+            <div class="sub">Paiement : 50 % à la commande · 50 % à la livraison</div>
+          </div>
+          <div class="amt">1 500 €</div>
+        </div>
+      </div>
+      <div style="margin-top:9px;font-family:var(--mono);font-size:10.5px;color:var(--muted);">* Prix TTC. Le client est propriétaire du code source dès le règlement intégral.</div>
+    </div>
+
+    <!-- CONDITIONS -->
+    <div>
+      <div class="sh"><span class="sh-n">06</span><span class="sh-t">Conditions</span><span class="sh-r"></span></div>
+      <div class="cond-row">
+        <div class="cond"><div class="cond-lbl">Délai de livraison</div><div class="cond-val">Site déjà développé</div><div class="cond-sub">Livraison immédiate après accord et acompte. Mise en ligne sous 24–48h.</div></div>
+        <div class="cond"><div class="cond-lbl">Propriété du code</div><div class="cond-val">Transférée au client</div><div class="cond-sub">Le client devient propriétaire total du code source après paiement intégral.</div></div>
+        <div class="cond"><div class="cond-lbl">Hébergement</div><div class="cond-val">GitHub Pages — gratuit</div><div class="cond-sub">Aucun frais mensuel. Possibilité de connecter un nom de domaine personnalisé.</div></div>
+        <div class="cond"><div class="cond-lbl">Modifications futures</div><div class="cond-val">Devis sur demande</div><div class="cond-sub">Évolutions (ajout de pages, intégration WhatsApp, CMS) proposées séparément.</div></div>
+      </div>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div>
+      <div class="sh"><span class="sh-n">07</span><span class="sh-t">Bon pour accord</span><span class="sh-r"></span></div>
+      <div class="sig-grid">
+        <div class="sig-box">
+          <div class="sig-lbl">Le prestataire</div>
+          <div class="sig-field"><label>Nom &amp; prénom</label><div class="line"></div></div>
+          <div class="sig-field"><label>Date</label><div class="line"></div></div>
+          <div class="sig-sign">Signature</div>
+        </div>
+        <div class="sig-box">
+          <div class="sig-lbl">Le client — Garcia Automobiles</div>
+          <div class="sig-field"><label>Nom &amp; prénom</label><div class="line"></div></div>
+          <div class="sig-field"><label>Date</label><div class="line"></div></div>
+          <div class="sig-sign">Signature &amp; tampon "Bon pour accord"</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="doc-footer">
+    <span><strong>Garcia Automobiles</strong> — Vente de véhicules d'occasion · Mayotte</span>
+    <span>Page 2 / 2</span>
+  </div>
+</div>
 
 </body>
 </html>
