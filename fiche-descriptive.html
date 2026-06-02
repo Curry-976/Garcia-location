@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devis — Site Web Garcia Automobiles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0A0F1E; --pearl: #E4F0F6; --pearl2: #F5FAFD;
+      --orange: #F0A14B; --orange2: #E8913A;
+      --muted: #4B5563; --border: #D1E3ED;
+      --mono: "IBM Plex Mono", monospace;
+      --sans: "Inter", system-ui, sans-serif;
+    }
+    body { font-family: var(--sans); background: #edf2f7; color: var(--navy); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    .print-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; }
+    .print-bar span { font-family: var(--mono); font-size: 12px; opacity: 0.55; }
+    .print-bar button { font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; background: var(--orange); color: var(--navy); border: none; cursor: pointer; padding: 8px 20px; border-radius: 4px; font-weight: 500; }
+    .print-bar button:hover { background: var(--orange2); }
+
+    .page { width: 794px; min-height: 1123px; margin: 76px auto 0; background: #fff; box-shadow: 0 4px 48px rgba(10,15,30,0.14); display: flex; flex-direction: column; page-break-after: always; }
+    .page + .page { margin-top: 0; }
+
+    .doc-header { background: var(--navy); padding: 42px 48px 38px; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+    .doc-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+    .doc-title { font-size: 27px; font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; color: #fff; }
+    .doc-subtitle { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 7px; }
+    .doc-meta { text-align: right; font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.9; }
+    .doc-meta strong { color: var(--orange); font-weight: 500; }
+    .accent-bar { height: 3px; background: var(--orange); }
+
+    .doc-body { padding: 40px 48px; flex: 1; display: flex; flex-direction: column; gap: 34px; }
+
+    .sh { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .sh-n { font-family: var(--mono); font-size: 10px; color: var(--orange); background: rgba(240,161,75,0.1); border: 1px solid rgba(240,161,75,0.28); padding: 2px 8px; border-radius: 3px; letter-spacing: 0.1em; }
+    .sh-t { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--navy); }
+    .sh-r { flex: 1; height: 1px; background: var(--border); }
+
+    .intro { background: var(--pearl2); border-left: 3px solid var(--orange); padding: 18px 20px; border-radius: 0 6px 6px 0; font-size: 13.5px; line-height: 1.72; }
+    .intro strong { color: var(--navy); font-weight: 600; }
+
+    .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .feat { display: flex; gap: 12px; align-items: flex-start; background: var(--pearl2); border: 1px solid var(--border); border-radius: 6px; padding: 13px 15px; }
+    .feat-ico { width: 32px; height: 32px; border-radius: 6px; background: rgba(240,161,75,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .feat-ico svg { width: 16px; height: 16px; color: var(--orange); }
+    .feat strong { display: block; font-size: 12.5px; font-weight: 600; color: var(--navy); }
+    .feat span { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    thead tr { background: var(--navy); }
+    thead th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 9px 14px; text-align: left; color: rgba(255,255,255,0.85); font-weight: 500; }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: var(--pearl2); }
+    tbody td { padding: 9px 14px; vertical-align: top; line-height: 1.5; }
+    tbody td.label { font-weight: 600; color: var(--navy); white-space: nowrap; width: 34%; }
+    tbody td.right { text-align: right; font-family: var(--mono); font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+
+    .pricing { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .pr { display: flex; align-items: center; justify-content: space-between; padding: 11px 18px; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .pr:last-child { border-bottom: none; }
+    .pr.alt { background: var(--pearl2); }
+    .pr.total { background: var(--navy); color: #fff; }
+    .pr .lbl { font-weight: 500; }
+    .pr .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .pr.total .sub { color: rgba(255,255,255,0.45); }
+    .pr .amt { font-family: var(--mono); font-weight: 600; white-space: nowrap; color: var(--navy); }
+    .pr.total .amt { color: var(--orange); font-size: 20px; }
+
+    .inc-list { display: flex; flex-direction: column; gap: 8px; }
+    .inc { display: flex; align-items: baseline; gap: 10px; font-size: 12.5px; }
+    .inc::before { content: ""; display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 6px; }
+
+    .cond-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cond { background: var(--pearl2); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+    .cond-lbl { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+    .cond-val { font-weight: 700; font-size: 14px; color: var(--navy); }
+    .cond-sub { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .sig-box { border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+    .sig-lbl { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 14px; }
+    .sig-field { margin-bottom: 12px; }
+    .sig-field label { display: block; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+    .sig-field .line { border-bottom: 1px solid var(--border); min-height: 22px; }
+    .sig-sign { border-top: 1px dashed var(--border); margin-top: 36px; padding-top: 6px; font-size: 11px; color: var(--muted); }
+
+    .doc-footer { background: var(--pearl); padding: 13px 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
+    .doc-footer span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+    .doc-footer strong { color: var(--navy); }
+
+    @media print {
+      body { background: #fff; }
+      .print-bar { display: none !important; }
+      .page { margin: 0; box-shadow: none; width: 100%; }
+    }
+    @media (max-width: 860px) {
+      .page { width: 100%; margin: 60px 0 0; }
+      .doc-header, .doc-body { padding: 28px 24px; }
+      .doc-footer { padding: 13px 24px; }
+      .feat-grid, .sig-grid, .cond-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="print-bar">
+  <span>Garcia Automobiles · Devis Site Web · GA-2025-001</span>
+  <button onclick="window.print()">Imprimer / Exporter PDF</button>
+</div>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="doc-header">
+    <div>
+      <div class="doc-label">Devis · Création de site web</div>
+      <div class="doc-title">Site Web Professionnel<br />Garcia Automobiles</div>
+      <div class="doc-subtitle">Conception &amp; développement sur-mesure · Mayotte</div>
+    </div>
+    <div class="doc-meta">
+      <div>Réf. : <strong>GA-2025-001</strong></div>
+      <div>Date : <strong>Juin 2025</strong></div>
+      <div>Validité : <strong>30 jours</strong></div>
+      <div style="margin-top:12px;line-height:1.5;">Client :<br /><strong style="color:#fff;font-family:var(--sans);font-size:13px;">Garcia Automobiles<br />Mayotte</strong></div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="doc-body">
+
+    <!-- 01 PRÉSENTATION -->
+    <div>
+      <div class="sh"><span class="sh-n">01</span><span class="sh-t">Présentation du projet</span><span class="sh-r"></span></div>
+      <div class="intro">
+        Ce devis couvre la <strong>création complète du site web de Garcia Automobiles</strong>, spécialiste de la vente de véhicules d'occasion à Mayotte. Le site sera conçu et développé sur-mesure, de A à Z — design, développement, intégration du contenu — pour offrir une présence digitale professionnelle et efficace.<br /><br />
+        Le résultat sera un <strong>site web performant, adapté à tous les appareils</strong>, avec un catalogue de véhicules interactif, un formulaire de contact, les informations des 3 showrooms, et tout le nécessaire pour convertir les visiteurs en acheteurs.
+      </div>
+    </div>
+
+    <!-- 02 FONCTIONNALITÉS -->
+    <div>
+      <div class="sh"><span class="sh-n">02</span><span class="sh-t">Fonctionnalités incluses</span><span class="sh-r"></span></div>
+      <div class="feat-grid">
+        <div class="feat">
+          <div class="feat-ico"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h8"/></svg></div>
+          <div><strong>Catalogue véhicules interactif</strong><span>Fiches par véhicule avec filtres (citadine, SUV, utilitaire), prix, kilométrage, motorisation, transmission.</span></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
+          <div><strong>Formulaire de réservation</strong><span>Le visiteur choisit un véhicule et envoie une demande de contact avec ses coordonnées et disponibilités.</span></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg></div>
+          <div><strong>3 showrooms</strong><span>Page dédiée avec adresse, horaires, téléphone et lien Google Maps pour Kawéni, Chirongui et l'Aéroport.</span></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></div>
+          <div><strong>Site 100% responsive</strong><span>Adapté à tous les écrans : téléphone, tablette, ordinateur. Navigation fluide et boutons accessibles sur mobile.</span></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>
+          <div><strong>Avis clients &amp; FAQ</strong><span>Section témoignages et FAQ pour rassurer les acheteurs et répondre aux questions fréquentes.</span></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>Site rapide &amp; léger</strong><span>Chargement optimisé, animations fluides, fonctionne même sur connexion mobile 3G/4G à Mayotte.</span></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+          <div><strong>Référencement Google (SEO)</strong><span>Structure optimisée pour apparaître dans les résultats Google sur les recherches liées à l'automobile à Mayotte.</span></div>
+        </div>
+        <div class="feat">
+          <div class="feat-ico"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg></div>
+          <div><strong>Design professionnel sur-mesure</strong><span>Identité visuelle unique créée spécifiquement pour Garcia Automobiles. Aucun template générique utilisé.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 PRESTATIONS -->
+    <div>
+      <div class="sh"><span class="sh-n">03</span><span class="sh-t">Détail des prestations</span><span class="sh-r"></span></div>
+      <table>
+        <thead><tr><th>Prestation</th><th>Description</th><th style="text-align:right;">Estimé</th></tr></thead>
+        <tbody>
+          <tr><td class="label">Design UI/UX</td><td>Création de l'identité visuelle, des couleurs, de la typographie et de l'ensemble des pages. Design moderne pensé pour vendre.</td><td class="right">~12 h</td></tr>
+          <tr><td class="label">Développement frontend</td><td>Intégration complète en React : composants interactifs, animations, filtres catalogue, module de réservation, navigation mobile.</td><td class="right">~20 h</td></tr>
+          <tr><td class="label">Intégration du contenu</td><td>Saisie des véhicules, des agences, des textes, des témoignages et de la FAQ. Tout personnalisé pour Garcia Automobiles.</td><td class="right">~5 h</td></tr>
+          <tr><td class="label">Responsive &amp; tests</td><td>Tests sur iPhone, Android, tablette et desktop. Vérification sur toutes les tailles d'écran.</td><td class="right">~6 h</td></tr>
+          <tr><td class="label">Performance &amp; SEO</td><td>Optimisation du chargement, structure sémantique, balises Google, polices optimisées.</td><td class="right">~4 h</td></tr>
+          <tr><td class="label">Mise en ligne</td><td>Accompagnement au déploiement, tests finaux. L'hébergement et le nom de domaine sont à la charge du client.</td><td class="right">~2 h</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="doc-footer">
+    <span>Garcia Automobiles · Devis Site Web · Réf. GA-2025-001</span>
+    <span>Page 1 / 2</span>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="accent-bar" style="background:var(--navy);height:4px;"></div>
+
+  <div class="doc-body">
+
+    <!-- 04 LIVRAISON -->
+    <div>
+      <div class="sh"><span class="sh-n">04</span><span class="sh-t">Ce qui est inclus à la livraison</span><span class="sh-r"></span></div>
+      <div class="inc-list">
+        <div class="inc"><strong>Le site web complet mis en ligne</strong> — accessible depuis n'importe quel navigateur dans le monde, sur votre propre adresse web.</div>
+        <div class="inc"><strong>Le code source complet</strong> — tous les fichiers vous appartiennent. Modifiable par n'importe quel développeur à l'avenir.</div>
+        <div class="inc"><strong>Guide de mise à jour du catalogue</strong> — pour ajouter ou modifier un véhicule facilement.</div>
+        <div class="inc"><strong>1 révision incluse</strong> — ajustement de texte, couleur, logo ou coordonnées après livraison.</div>
+        <div class="inc"><strong>Support technique 30 jours</strong> — disponible par téléphone/WhatsApp pour toute question après la mise en ligne.</div>
+      </div>
+    </div>
+
+    <!-- 05 TARIF -->
+    <div>
+      <div class="sh"><span class="sh-n">05</span><span class="sh-t">Détail tarifaire</span><span class="sh-r"></span></div>
+      <div class="pricing">
+        <div class="pr alt">
+          <div><div class="lbl">Design UI/UX sur-mesure</div><div class="sub">Identité visuelle, maquettes, système de design complet</div></div>
+          <div class="amt">400 €</div>
+        </div>
+        <div class="pr">
+          <div><div class="lbl">Développement du site</div><div class="sub">Catalogue, réservation, animations, navigation mobile</div></div>
+          <div class="amt">700 €</div>
+        </div>
+        <div class="pr alt">
+          <div><div class="lbl">Intégration du contenu</div><div class="sub">Véhicules, agences, textes, responsive tous écrans</div></div>
+          <div class="amt">250 €</div>
+        </div>
+        <div class="pr">
+          <div><div class="lbl">Performance, SEO &amp; mise en ligne</div><div class="sub">Optimisation, référencement Google, déploiement</div></div>
+          <div class="amt">150 €</div>
+        </div>
+        <div class="pr total">
+          <div>
+            <div style="font-family:var(--mono);font-size:9.5px;letter-spacing:0.12em;text-transform:uppercase;opacity:0.5;margin-bottom:4px;">Total TTC · Projet complet</div>
+            <div style="font-size:15px;font-weight:700;">Site web professionnel livré et mis en ligne</div>
+            <div class="sub">Paiement : 50 % à la commande · 50 % à la livraison</div>
+          </div>
+          <div class="amt">1 500 €</div>
+        </div>
+      </div>
+      <div style="margin-top:9px;font-family:var(--mono);font-size:10.5px;color:var(--muted);">* Prix TTC. Le client est propriétaire du code source dès le règlement intégral.</div>
+    </div>
+
+    <!-- 06 CONDITIONS -->
+    <div>
+      <div class="sh"><span class="sh-n">06</span><span class="sh-t">Conditions</span><span class="sh-r"></span></div>
+      <div class="cond-row">
+        <div class="cond"><div class="cond-lbl">Délai de réalisation</div><div class="cond-val">10 à 14 jours ouvrés</div><div class="cond-sub">À compter de la validation du devis et du versement de l'acompte.</div></div>
+        <div class="cond"><div class="cond-lbl">Propriété du code</div><div class="cond-val">Transférée au client</div><div class="cond-sub">Le client devient propriétaire total du site et du code source après paiement intégral.</div></div>
+        <div class="cond"><div class="cond-lbl">Hébergement</div><div class="cond-val">À la charge du client</div><div class="cond-sub">Le prestataire accompagne la mise en ligne, mais l'hébergement et le nom de domaine sont à prévoir par le client.</div></div>
+        <div class="cond"><div class="cond-lbl">Évolutions futures</div><div class="cond-val">Devis sur demande</div><div class="cond-sub">Ajout de pages, boutique en ligne, messagerie instantanée — proposés séparément.</div></div>
+      </div>
+    </div>
+
+    <!-- 07 SIGNATURE -->
+    <div>
+      <div class="sh"><span class="sh-n">07</span><span class="sh-t">Bon pour accord</span><span class="sh-r"></span></div>
+      <div class="sig-grid">
+        <div class="sig-box">
+          <div class="sig-lbl">Le prestataire</div>
+          <div class="sig-field"><label>Nom &amp; prénom</label><div class="line"></div></div>
+          <div class="sig-field"><label>Date</label><div class="line"></div></div>
+          <div class="sig-sign">Signature</div>
+        </div>
+        <div class="sig-box">
+          <div class="sig-lbl">Le client — Garcia Automobiles</div>
+          <div class="sig-field"><label>Nom &amp; prénom</label><div class="line"></div></div>
+          <div class="sig-field"><label>Date</label><div class="line"></div></div>
+          <div class="sig-sign">Signature &amp; tampon "Bon pour accord"</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="doc-footer">
+    <span><strong>Garcia Automobiles</strong> — Vente de véhicules d'occasion · Mayotte</span>
+    <span>Page 2 / 2</span>
+  </div>
+</div>
+
+</body>
+</html>
