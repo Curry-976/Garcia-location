@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fiche Descriptive — Garcia Automobiles</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #0A0F1E;
+      --pearl: #E4F0F6;
+      --orange: #F0A14B;
+      --teal:  #3FD8C6;
+      --ink:   #1A1D2E;
+      --ink-dim: #4A5068;
+      --ink-faint: #8892AA;
+      --border: #E2E8F0;
+      --bg: #FFFFFF;
+      --bg-soft: #F7F9FC;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ---- COVER ---- */
+    .cover {
+      background: var(--navy);
+      color: var(--pearl);
+      padding: 60px 64px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(228,240,246,0.08), transparent 65%);
+    }
+    .cover::after {
+      content: "";
+      position: absolute;
+      bottom: -60px; left: 20%;
+      width: 300px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,161,75,0.12), transparent 65%);
+    }
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 48px;
+    }
+    .cover-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(228,240,246,0.45);
+      border: 1px solid rgba(228,240,246,0.15);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+    .cover-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(228,240,246,0.35);
+    }
+    .cover-title {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .cover-title span { color: var(--orange); }
+    .cover-sub {
+      font-size: 15px;
+      color: rgba(228,240,246,0.55);
+      font-weight: 400;
+      margin-bottom: 40px;
+    }
+    .cover-pills {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .cover-pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: rgba(228,240,246,0.07);
+      border: 1px solid rgba(228,240,246,0.14);
+      color: rgba(228,240,246,0.7);
+    }
+    .cover-pill.accent { background: rgba(240,161,75,0.15); border-color: rgba(240,161,75,0.3); color: var(--orange); }
+
+    /* ---- BODY ---- */
+    .body {
+      padding: 52px 64px;
+    }
+
+    /* Section blocks */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--orange);
+      background: rgba(240,161,75,0.1);
+      border: 1px solid rgba(240,161,75,0.25);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    /* Feature cards */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .feature-card {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+    }
+    .feature-card.wide { grid-column: span 2; }
+    .feature-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .feature-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--orange); flex: none;
+    }
+    .feature-dot.teal { background: var(--teal); }
+    .feature-desc {
+      font-size: 13px;
+      color: var(--ink-dim);
+      line-height: 1.65;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    thead tr {
+      background: var(--navy);
+      color: var(--pearl);
+    }
+    thead th {
+      padding: 12px 18px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 11.5px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    thead th:first-child { border-radius: 10px 0 0 0; }
+    thead th:last-child  { border-radius: 0 10px 0 0; }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:nth-child(even) { background: var(--bg-soft); }
+    tbody td { padding: 11px 18px; color: var(--ink-dim); }
+    tbody td:first-child { font-weight: 600; color: var(--ink); }
+
+    /* Checklist */
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--ink-dim);
+    }
+    .check-icon {
+      width: 20px; height: 20px; border-radius: 50%; flex: none;
+      background: rgba(63,216,198,0.15);
+      border: 1px solid rgba(63,216,198,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; color: var(--teal); margin-top: 1px;
+    }
+
+    /* Evolution list */
+    .evo-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .evo-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 13.5px;
+      color: var(--ink-dim);
+    }
+    .evo-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(228,240,246,0.06);
+      border: 1px solid rgba(228,240,246,0.12);
+      color: var(--ink-faint);
+      flex: none;
+    }
+    .evo-tag.opt { background: rgba(240,161,75,0.1); border-color: rgba(240,161,75,0.25); color: var(--orange); }
+
+    /* Pricing */
+    .pricing-wrap {
+      background: var(--navy);
+      border-radius: 18px;
+      padding: 32px;
+      color: var(--pearl);
+    }
+    .pricing-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 24px;
+    }
+    .pricing-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(228,240,246,0.08);
+      font-size: 14px;
+    }
+    .pricing-row:last-child { border-bottom: none; }
+    .pricing-label { color: rgba(228,240,246,0.65); }
+    .pricing-amount {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      color: rgba(228,240,246,0.9);
+    }
+    .pricing-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      background: rgba(240,161,75,0.15);
+      border: 1px solid rgba(240,161,75,0.3);
+      border-radius: 12px;
+    }
+    .pricing-total-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(228,240,246,0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .pricing-total-amount {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: -0.03em;
+    }
+
+    /* Footer */
+    .doc-footer {
+      background: var(--bg-soft);
+      border-top: 1px solid var(--border);
+      padding: 28px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--ink-faint);
+    }
+    .doc-footer strong { color: var(--ink-dim); }
+
+    /* Color swatches */
+    .swatches {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 12.5px;
+    }
+    .swatch-dot {
+      width: 28px; height: 28px; border-radius: 8px; flex: none;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+    }
+    .swatch-info { display: flex; flex-direction: column; }
+    .swatch-name { font-weight: 600; font-size: 12px; }
+    .swatch-hex { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ink-faint); }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-box {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--orange);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 11.5px;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Print */
+    @media print {
+      body { font-size: 12px; }
+      .cover { padding: 40px 48px 36px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .body { padding: 36px 48px; }
+      .doc-footer { padding: 20px 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-top">
+      <span class="cover-tag">Fiche Descriptive · Prestation Web</span>
+      <span class="cover-date">Juin 2026</span>
+    </div>
+    <div class="cover-title">Garcia<br /><span>Automobiles</span></div>
+    <div class="cover-sub">Site web vitrine &amp; outil de vente — Mayotte</div>
+    <div class="cover-pills">
+      <span class="cover-pill accent">Développement sur mesure</span>
+      <span class="cover-pill">React · CSS Custom</span>
+      <span class="cover-pill">Design Premium</span>
+      <span class="cover-pill">Responsive Mobile</span>
+      <span class="cover-pill">Déployé &amp; en ligne</span>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- Stats rapides -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-value">8</div>
+        <div class="stat-label">Sections</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">9</div>
+        <div class="stat-label">Véhicules</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Showrooms</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">Sur mesure</div>
+      </div>
+    </div>
+
+    <!-- 01 · Présentation -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Présentation du projet</span>
+      </div>
+      <p style="font-size:14px; color:#4A5068; line-height:1.75; max-width:700px;">
+        Site web professionnel conçu sur mesure pour Garcia Automobiles, vendeur de véhicules d'occasion à Mayotte.
+        L'objectif est de digitaliser la présence commerciale de l'entreprise, présenter le catalogue de véhicules,
+        et générer des contacts qualifiés via un tunnel de conversion optimisé — incluant un widget d'estimation
+        de rachat par immatriculation.
+      </p>
+    </div>
+
+    <!-- 02 · Fonctionnalités -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Fonctionnalités</span>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card wide">
+          <div class="feature-name"><span class="feature-dot accent"></span>Widget d'estimation de rachat</div>
+          <div class="feature-desc">Fonctionnalité unique : saisie de la plaque d'immatriculation (format EU authentique avec visuel bleu/étoile/F) et du kilométrage pour générer une estimation. Tunnel direct vers le formulaire de contact.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-name"><span class="feature-dot"></span>Catalogue véhicules filtré</div>
+          <div class="feature-desc">Grille 9 véhicules avec filtres par catégorie (Citadines · SUV · Utilitaires). Chaque fiche : photo, année, km, carburant, transmission, prix.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-name"><span class="feature-dot"></span>Formulaire de contact 3 étapes</div>
+          <div class="feature-desc">Tunnel guidé : choix du véhicule → type de demande (essai / info / financement / reprise) → coordonnées. Réduit la friction, augmente la conversion.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-name"><span class="feature-dot teal"></span>Showrooms interactifs</div>
+          <div class="feature-desc">3 points de vente (Mamoudzou · Chirongui · Aéroport) avec adresse, horaires, appel direct et lien Google Maps intégré.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-name"><span class="feature-dot teal"></span>Avis clients &amp; FAQ</div>
+          <div class="feature-desc">Carrousel d'avis avec notation 5 étoiles. FAQ 6 questions sur l'achat, garantie, financement et démarches administratives.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 · Technique -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">Caractéristiques techniques</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Élément</th>
+            <th>Détail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Technologie</td><td>React (composants sur mesure), CSS custom properties</td></tr>
+          <tr><td>Hébergement</td><td>GitHub Pages — gratuit, fiable, CDN mondial</td></tr>
+          <tr><td>Performance</td><td>Page unique (SPA), chargement ultra-rapide</td></tr>
+          <tr><td>Responsive</td><td>Mobile (375px) · Tablette (768px) · Desktop (1440px)</td></tr>
+          <tr><td>Navigateurs</td><td>Chrome, Safari, Firefox, Edge — compatibilité totale</td></tr>
+          <tr><td>Thème</td><td>Clair / Sombre avec bascule intégrée</td></tr>
+          <tr><td>Animations</td><td>Révélation au scroll, transitions fluides, marquee</td></tr>
+          <tr><td>Code</td><td>Propriété intégrale du client à la livraison</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 04 · Design -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">Identité visuelle</span>
+      </div>
+      <div class="swatches" style="margin-bottom:20px;">
+        <div class="swatch">
+          <div class="swatch-dot" style="background:#F0A14B;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Safran</span>
+            <span class="swatch-hex">#F0A14B</span>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-dot" style="background:#3FD8C6;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Teal</span>
+            <span class="swatch-hex">#3FD8C6</span>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-dot" style="background:#0B0C0E; border:1px solid #ddd;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Ebony</span>
+            <span class="swatch-hex">#0B0C0E</span>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-dot" style="background:#F3EFE7;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Sand</span>
+            <span class="swatch-hex">#F3EFE7</span>
+          </div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Élément</th><th>Choix</th></tr></thead>
+        <tbody>
+          <tr><td>Typographie titres</td><td>Clash Display — moderne, premium, autorité</td></tr>
+          <tr><td>Typographie corps</td><td>Satoshi — lisible, contemporain, neutre</td></tr>
+          <tr><td>Style UI</td><td>Glassmorphism — verre dépoli, profondeur, luxe</td></tr>
+          <tr><td>Fond</td><td>Thème sombre par défaut, thème clair disponible</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 05 · Livrables -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title">Livrables inclus</span>
+      </div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-icon">✓</div><span>Code source complet (propriété du client)</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>Site en ligne et accessible immédiatement</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>Hébergement GitHub Pages configuré</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>Responsive mobile, tablette, desktop</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>9 véhicules intégrés avec specs et prix</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>3 showrooms avec coordonnées réelles</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>Formulaire de contact fonctionnel</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>Documentation pour modifier le contenu</span></div>
+      </div>
+    </div>
+
+    <!-- 06 · Évolutions -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <span class="section-title">Évolutions possibles</span>
+      </div>
+      <div class="evo-list">
+        <div class="evo-item"><span class="evo-tag opt">Option</span>Formulaire → envoi email automatique (notifications à chaque contact)</div>
+        <div class="evo-item"><span class="evo-tag opt">Option</span>Espace administration pour gérer le catalogue sans toucher au code</div>
+        <div class="evo-item"><span class="evo-tag opt">Option</span>Intégration WhatsApp Business API — réponses automatiques</div>
+        <div class="evo-item"><span class="evo-tag opt">Option</span>Référencement SEO local — visibilité sur Google Mayotte</div>
+        <div class="evo-item"><span class="evo-tag opt">Option</span>Version multilingue français / shimaoré</div>
+      </div>
+    </div>
+
+    <!-- 07 · Tarif -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <span class="section-title">Récapitulatif tarifaire</span>
+      </div>
+      <div class="pricing-wrap">
+        <div class="pricing-rows">
+          <div class="pricing-row">
+            <span class="pricing-label">Conception &amp; Design sur mesure</span>
+            <span class="pricing-amount">400 €</span>
+          </div>
+          <div class="pricing-row">
+            <span class="pricing-label">Développement frontend (React + CSS)</span>
+            <span class="pricing-amount">700 €</span>
+          </div>
+          <div class="pricing-row">
+            <span class="pricing-label">Intégration contenu &amp; rédaction</span>
+            <span class="pricing-amount">200 €</span>
+          </div>
+          <div class="pricing-row">
+            <span class="pricing-label">Mise en ligne &amp; configuration</span>
+            <span class="pricing-amount">150 €</span>
+          </div>
+        </div>
+        <div class="pricing-total">
+          <span class="pricing-total-label">Total HT</span>
+          <span class="pricing-total-amount">1 450 €</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div>Document confidentiel · Garcia Automobiles · Mayotte · 2026</div>
+    <div>Prestation réalisée sur mesure · <strong>Non transférable sans accord</strong></div>
+  </div>
+
+  <!-- Print button (hidden on print) -->
+  <div style="text-align:center; padding: 24px; background:#f7f9fc; border-top:1px solid #e2e8f0;">
+    <button onclick="window.print()"
+      style="background:#0A0F1E; color:#E4F0F6; border:none; padding:14px 32px;
+             border-radius:999px; font-family:'IBM Plex Mono',monospace; font-size:12px;
+             letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;">
+      Imprimer / Sauvegarder en PDF
+    </button>
+  </div>
+
+</body>
+</html>
